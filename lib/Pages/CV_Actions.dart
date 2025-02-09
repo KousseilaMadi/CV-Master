@@ -99,8 +99,15 @@ class CV_Actions extends StatelessWidget {
                     ),
                     Button(
                       title: AppLocalizations.of(context)!.changeLanguage,
-                      onpress: () =>
-                          {Navigate(context, CV_Language(cvId: cvId), true)},
+                      onpress: () => {
+                        Navigate(
+                            context,
+                            CV_Language(
+                              cvId: cvId,
+                              cameFrom: 'cvActions',
+                            ),
+                            true)
+                      },
                     ),
                     Button(
                       title: AppLocalizations.of(context)!.delete,

@@ -19,7 +19,12 @@ class Home extends StatelessWidget {
     void onpress() {
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => CV_Language()));
-      Navigate(context, CV_Language(), false);
+      Navigate(
+          context,
+          CV_Language(
+            cameFrom: 'home',
+          ),
+          false);
     }
 
     return Scaffold(
@@ -33,12 +38,45 @@ class Home extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.home),
         backgroundColor: colors.primary,
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigate(
+            context,
+            CV_Language(
+              cameFrom: 'languageChangeButton',
+            ),
+            false);
+      }),
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         children: [
-          CVsList(),
-          BottomPanelOneButton(
-              title: AppLocalizations.of(context)!.createNew, onpress: onpress),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Positioned(
+                left: 0,
+                top: 0,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Your CVs:',
+                    style: TextStyle(fontSize: 26),
+                  ),
+                )),
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: colors.secondary),
+                width: percent(92, 'w', context),
+                height: percent(80, 'h', context),
+                child: CVsList(),
+              ),
+            )
+          ]),
+          Positioned(
+              child: BottomPanelOneButton(
+            title: AppLocalizations.of(context)!.createNew,
+            onpress: onpress,
+            page: 'home',
+          )),
         ],
       ),
     );
@@ -51,13 +89,18 @@ class CVsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (st.CVs.isNotEmpty) {
-      return GridView.count(
-        padding: EdgeInsets.fromLTRB(4, 22, 4, 150),
-        childAspectRatio: (4 / 6),
-        crossAxisCount: 2,
+      return ListView(
         children: [
+          SizedBox(
+            height: 10,
+          ),
           ...st.CVs.map((cv) {
-            return cvInstance(cv: cv);
+            return Column(children: [
+              SizedBox(
+                height: 2,
+              ),
+              cvInstance(cv: cv)
+            ]);
           }),
         ],
       );
@@ -101,66 +144,53 @@ class cvInstance extends StatelessWidget {
     }
 
     return Center(
-      child: InkWell(
-        onTap: () async {
-          Data custom = cd.customs[st.CVs.indexOf(cv)];
-          await Template_01.generateNoArgs(st.CVs.indexOf(cv));
-          Navigate(
-              context,
-              CV_Actions(
-                cvId: st.CVs.indexOf(cv),
-              ),
-              false);
-        },
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(2),
-                color: colors.secondary,
-                border: Border.all(width: 1)),
-            height: percent(100, 'h', context),
-            width: percent(100, 'w', context),
-            margin: EdgeInsets.all(2),
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: percent(35, 'w', context) / 2,
-                      height: percent(35, 'w', context) / 2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.grey[600],
-                      ),
-                      margin: EdgeInsets.fromLTRB(percent(2, 'w', context) / 2,
-                          percent(5, 'w', context) / 2, 0, 0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Picture(
-                            defaultP: cv.personalInformation.defaultPicture,
-                            path: cv.personalInformation.picture),
-                      ),
+      child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: colors.secondary,
+          ),
+          height: percent(18, 'h', context),
+          width: percent(100, 'w', context),
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: percent(35, 'w', context) / 2,
+                    height: percent(35, 'w', context) / 2,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[600],
                     ),
-                    Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Text(
-                          cv.personalInformation.fullName,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ))
-                  ],
-                ),
-                Positioned(
-                  bottom: 8,
-                  right: 12,
-                  child: Text(
-                    getLang(cv.CVlanguage),
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    margin: EdgeInsets.fromLTRB(percent(2, 'w', context) / 2,
+                        percent(5, 'w', context) / 2, 0, 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Picture(
+                          defaultP: cv.personalInformation.defaultPicture,
+                          path: cv.personalInformation.picture),
+                    ),
                   ),
-                )
-              ],
-            )),
-      ),
+                  Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Text(
+                        cv.personalInformation.fullName,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
+                      ))
+                ],
+              ),
+              Positioned(
+                bottom: 8,
+                right: 12,
+                child: Text(
+                  getLang(cv.CVlanguage),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
+          )),
     );
   }
 }

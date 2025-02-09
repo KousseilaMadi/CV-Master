@@ -31,7 +31,7 @@ class PersonalInformation extends StatefulWidget {
 class _PersonalInformation extends State<PersonalInformation> {
   //these controllers are only used to set the text in the fields on the init of the page and NOTHING more
   // ignore: unused_field
-  File? _imageFile;
+  // File? _imageFile;
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
@@ -53,20 +53,21 @@ class _PersonalInformation extends State<PersonalInformation> {
     memory.currentSection = 'personalInformation';
     tmp.personalInformation = PersonalInformationT.fromJson(
         jsonDecode(jsonEncode(st.CVs[widget.cvId].personalInformation)));
-    _imageFile = File(st.CVs[widget.cvId].personalInformation.picture);
+    // _imageFile = File(st.CVs[widget.cvId].personalInformation.picture);
   }
 
   void savePersonalInformation() {
-    setState(() {
-      st.CVs[widget.cvId].personalInformation = PersonalInformationT.fromJson(
-          jsonDecode(jsonEncode(tmp.personalInformation)));
-    });
+    st.CVs[widget.cvId].personalInformation = PersonalInformationT.fromJson(
+        jsonDecode(jsonEncode(tmp.personalInformation)));
     writeToStorage();
     setUnsavedChanges('personalInformation', false);
+    setState(() {});
   }
 
   pictureListener(bool defaultP, String value) {
     st.CVs[widget.cvId].personalInformation.picture = value;
+    tmp.personalInformation.picture = value;
+    tmp.personalInformation.defaultPicture = defaultP;
     st.CVs[widget.cvId].personalInformation.defaultPicture = defaultP;
   }
 
@@ -100,8 +101,12 @@ class _PersonalInformation extends State<PersonalInformation> {
     if (image != null) {
       setState(() {
         pictureListener(false, image.path);
-        _imageFile = File(image.path);
+        // _imageFile = File(image.path);
       });
+    } else {
+      pictureListener(true, 'assets/images/default_picture.jpg');
+
+      // _imageFile = File('assets/images/default_picture.jpg');
     }
   }
 
@@ -151,8 +156,6 @@ class _PersonalInformation extends State<PersonalInformation> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(40),
                               child: Picture(
-                                defaultP: st.CVs[widget.cvId]
-                                    .personalInformation.defaultPicture,
                                 path: st.CVs[widget.cvId].personalInformation
                                     .picture,
                               ),
@@ -167,8 +170,10 @@ class _PersonalInformation extends State<PersonalInformation> {
                                   Icons.abc_outlined, ButtonType.text),
                               CustomButton(() {
                                 setState(() {
-                                  pictureListener(true, '');
-                                  _imageFile = null;
+                                  pictureListener(true,
+                                      'assets/images/default_picture.jpg');
+                                  // _imageFile =
+                                  //     File('assets/images/default_picture.jpg');
                                 });
                               }, AppLocalizations.of(context)!.remove, 45,
                                   Icons.abc_outlined, ButtonType.text)
@@ -262,8 +267,8 @@ class _PersonalInformation extends State<PersonalInformation> {
                   },
                   title2ndBtn: AppLocalizations.of(context)!.save,
                   on2ndBtnPress: () {
-                    Fluttertoast.showToast(msg: 'Saved');
                     savePersonalInformation();
+                    Fluttertoast.showToast(msg: 'Saved');
                   },
                 )
               ],
@@ -280,19 +285,16 @@ class _PersonalInformation extends State<PersonalInformation> {
 // ignore: must_be_immutable
 class Picture extends StatelessWidget {
   String path;
-  bool defaultP;
-  Picture({required this.defaultP, required this.path, super.key});
+  Picture({required this.path, super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (!defaultP && path != '') {
+    if (path != 'assets/images/default_picture.jpg') {
       return Image(
         image: FileImage(File(path)),
         fit: BoxFit.cover,
       );
     } else {
-      st.CVs[0].personalInformation.picture =
-          'assets/images/default_picture.jpg';
       return Image(
         image: AssetImage('assets/images/default_picture.jpg'),
         fit: BoxFit.cover,

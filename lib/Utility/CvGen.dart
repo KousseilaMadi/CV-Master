@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cv_maker/Utility/CvLanguages.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -8,12 +9,8 @@ import 'package:printing/printing.dart';
 import 'StorageHandler.dart';
 
 class Template_01 {
-  static pw.Widget Contact(
-    Uint8List icon,
-    String? text,
-    int textColor,
-    double? textSize,
-  ) {
+  static pw.Widget Contact(Uint8List icon, String? text, int textColor,
+      double? textSize, pw.Font font) {
     final double iconSize = textSize!;
     if (text != '') {
       return pw.Container(
@@ -22,7 +19,7 @@ class Template_01 {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Padding(
-                    padding: pw.EdgeInsets.fromLTRB(0, 2, 10, 0),
+                    padding: pw.EdgeInsets.fromLTRB(10, 2, 10, 0),
                     child: pw.Image(pw.MemoryImage(icon), height: iconSize)),
                 pw.Container(
                     width: 182,
@@ -30,6 +27,7 @@ class Template_01 {
                       text ?? '',
                       style: pw.TextStyle(
                         fontSize: textSize,
+                        font: font,
                         color: PdfColor.fromInt(textColor),
                       ),
                     ))
@@ -39,14 +37,14 @@ class Template_01 {
   }
 
   static pw.Widget Reference(
-    String? name,
-    String? contact,
-    String? position,
-    int subheaderColor,
-    int textColor,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String? name,
+      String? contact,
+      String? position,
+      int subheaderColor,
+      int textColor,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 8, 0, 0),
       child: pw.Column(
@@ -56,6 +54,7 @@ class Template_01 {
             name ?? '',
             style: pw.TextStyle(
               fontSize: subheaderSize,
+              font: font,
               color: PdfColor.fromInt(subheaderColor),
             ),
           ),
@@ -63,6 +62,7 @@ class Template_01 {
             contact ?? '',
             style: pw.TextStyle(
               fontSize: textSize,
+              font: font,
               color: PdfColor.fromInt(textColor),
             ),
           ),
@@ -70,6 +70,7 @@ class Template_01 {
             position ?? '',
             style: pw.TextStyle(
               fontSize: textSize,
+              font: font,
               color: PdfColor.fromInt(textColor),
             ),
           ),
@@ -79,15 +80,15 @@ class Template_01 {
   }
 
   static pw.Widget Skill(
-    String skill,
-    double level,
-    int levelBackgroundColor,
-    int levelFillColor,
-    int textColor,
-    double? levelBarHeight,
-    double? levelBarWidth,
-    double? textSize,
-  ) {
+      String skill,
+      double level,
+      int levelBackgroundColor,
+      int levelFillColor,
+      int textColor,
+      double? levelBarHeight,
+      double? levelBarWidth,
+      double? textSize,
+      pw.Font font) {
     double borderRadius = 8;
     if (levelBarHeight! <= 18) {
       borderRadius = levelBarHeight / 2;
@@ -102,6 +103,7 @@ class Template_01 {
             skill,
             style: pw.TextStyle(
               fontSize: textSize,
+              font: font,
               color: PdfColor.fromInt(textColor),
             ),
           ),
@@ -128,10 +130,7 @@ class Template_01 {
   }
 
   static pw.Widget interests(
-    List<String> interests,
-    int cardColor,
-    int textColor,
-  ) {
+      List<String> interests, int cardColor, int textColor, pw.Font font) {
     return pw.GridView(
       crossAxisCount: 2,
       childAspectRatio: 1 / 3,
@@ -149,6 +148,7 @@ class Template_01 {
               textAlign: pw.TextAlign.center,
               style: pw.TextStyle(
                   color: PdfColor.fromInt(textColor),
+                  font: font,
                   fontWeight: pw.FontWeight.bold),
             ),
           );
@@ -158,15 +158,15 @@ class Template_01 {
   }
 
   static pw.Widget Language(
-    String language,
-    double level,
-    int levelBackgroundColor,
-    int levelFillColor,
-    int textColor,
-    double? levelBarHeight,
-    double? levelBarWidth,
-    double? textSize,
-  ) {
+      String language,
+      double level,
+      int levelBackgroundColor,
+      int levelFillColor,
+      int textColor,
+      double? levelBarHeight,
+      double? levelBarWidth,
+      double? textSize,
+      pw.Font font) {
     double borderRadius = 8;
     if (levelBarHeight! <= 18) {
       borderRadius = levelBarHeight / 2;
@@ -181,6 +181,7 @@ class Template_01 {
             language,
             style: pw.TextStyle(
               fontSize: textSize,
+              font: font,
               color: PdfColor.fromInt(textColor),
             ),
           ),
@@ -207,22 +208,23 @@ class Template_01 {
   }
 
   static pw.Widget Experience(
-    String companyName,
-    String startDate,
-    String endDate,
-    String jobTitle,
-    String comment,
-    int subheaderColor,
-    int textColor,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String companyName,
+      String startDate,
+      String endDate,
+      String jobTitle,
+      String comment,
+      int subheaderColor,
+      int textColor,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     pw.Widget dates = pw.Center();
     if (startDate != '' && endDate != '') {
       dates = pw.Text(
         '$startDate - $endDate',
         style: pw.TextStyle(
           fontSize: subheaderSize,
+          font: font,
           color: PdfColor.fromInt(subheaderColor),
         ),
       );
@@ -240,6 +242,7 @@ class Template_01 {
                       companyName,
                       style: pw.TextStyle(
                         fontSize: subheaderSize,
+                        font: font,
                         color: PdfColor.fromInt(subheaderColor),
                       ),
                     ),
@@ -249,6 +252,7 @@ class Template_01 {
                 jobTitle,
                 style: pw.TextStyle(
                   fontSize: textSize,
+                  font: font,
                   color: PdfColor.fromInt(textColor),
                 ),
               ),
@@ -256,6 +260,7 @@ class Template_01 {
                 comment,
                 style: pw.TextStyle(
                   fontSize: textSize,
+                  font: font,
                   color: PdfColor.fromInt(textColor),
                 ),
               ),
@@ -263,21 +268,22 @@ class Template_01 {
   }
 
   static pw.Widget Education(
-    String startDate,
-    String endDate,
-    String unviersity,
-    String comment,
-    int subheaderColor,
-    int textColor,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String startDate,
+      String endDate,
+      String unviersity,
+      String comment,
+      int subheaderColor,
+      int textColor,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     pw.Widget dates =
         pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children: [
       pw.Text(
         unviersity,
         style: pw.TextStyle(
           fontSize: subheaderSize,
+          font: font,
           color: PdfColor.fromInt(subheaderColor),
         ),
       ),
@@ -290,6 +296,7 @@ class Template_01 {
               '$startDate - $endDate',
               style: pw.TextStyle(
                 fontSize: subheaderSize,
+                font: font,
                 color: PdfColor.fromInt(subheaderColor),
               ),
             ),
@@ -297,6 +304,7 @@ class Template_01 {
               unviersity,
               style: pw.TextStyle(
                 fontSize: subheaderSize,
+                font: font,
                 color: PdfColor.fromInt(subheaderColor),
               ),
             ),
@@ -316,6 +324,7 @@ class Template_01 {
                 comment,
                 style: pw.TextStyle(
                   fontSize: textSize,
+                  font: font,
                   color: PdfColor.fromInt(textColor),
                 ),
               ),
@@ -330,14 +339,8 @@ class Template_01 {
   static Uint8List? linkedinBL;
   static Uint8List? Picture;
 
-  static pw.Widget Contacts(
-    String Language,
-    int cvId,
-    int textColor,
-    int headerColor,
-    double headerSize,
-    double textSize,
-  ) {
+  static pw.Widget Contacts(String Language, int cvId, int textColor,
+      int headerColor, double headerSize, double textSize, pw.Font font) {
     return pw.Container(
         margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: pw.Column(
@@ -347,6 +350,7 @@ class Template_01 {
               pw.Text(getText('contacts', Language),
                   style: pw.TextStyle(
                     fontSize: headerSize,
+                    font: font,
                     color: PdfColor.fromInt(headerColor),
                   )),
               Contact(
@@ -354,38 +358,42 @@ class Template_01 {
                 st.CVs[cvId].personalInformation.phoneNumber,
                 textColor,
                 textSize,
+                font,
               ),
               Contact(
                 emailBL!,
                 st.CVs[cvId].personalInformation.email,
                 textColor,
                 textSize,
+                font,
               ),
               Contact(
                 addressBL!,
                 st.CVs[cvId].personalInformation.address,
                 textColor,
                 textSize,
+                font,
               ),
               Contact(
                 websiteBL!,
                 st.CVs[cvId].personalInformation.website,
                 textColor,
                 textSize,
+                font,
               ),
             ]));
   }
 
   static pw.Widget References(
-    String Language,
-    int cvId,
-    int headerColor,
-    int subheaderColor,
-    int textColor,
-    double? headerSize,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String Language,
+      int cvId,
+      int headerColor,
+      int subheaderColor,
+      int textColor,
+      double? headerSize,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -395,6 +403,7 @@ class Template_01 {
             getText('references', Language),
             style: pw.TextStyle(
               fontSize: headerSize,
+              font: font,
               color: PdfColor.fromInt(headerColor),
             ),
           ),
@@ -407,6 +416,7 @@ class Template_01 {
               textColor,
               subheaderSize,
               textSize,
+              font,
             );
           })
         ],
@@ -415,17 +425,17 @@ class Template_01 {
   }
 
   static pw.Widget Skills(
-    String Language,
-    int cvId,
-    int levelBackgroundColor,
-    int levelFillColor,
-    int headerColor,
-    int textColor,
-    double? levelBarHeight,
-    double? levelBarWidth,
-    double? headerSize,
-    double? textSize,
-  ) {
+      String Language,
+      int cvId,
+      int levelBackgroundColor,
+      int levelFillColor,
+      int headerColor,
+      int textColor,
+      double? levelBarHeight,
+      double? levelBarWidth,
+      double? headerSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -435,6 +445,7 @@ class Template_01 {
             getText('skills', Language),
             style: pw.TextStyle(
               fontSize: headerSize,
+              font: font,
               color: PdfColor.fromInt(headerColor),
             ),
           ),
@@ -448,6 +459,7 @@ class Template_01 {
               levelBarHeight,
               levelBarWidth,
               textSize,
+              font,
             );
           })
         ],
@@ -456,15 +468,15 @@ class Template_01 {
   }
 
   static pw.Widget Experiences(
-    String Language,
-    int cvId,
-    int headerColor,
-    int subheaderColor,
-    int textColor,
-    double? headerSize,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String Language,
+      int cvId,
+      int headerColor,
+      int subheaderColor,
+      int textColor,
+      double? headerSize,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
         margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: pw.Column(
@@ -474,6 +486,7 @@ class Template_01 {
                 getText('experiences', Language),
                 style: pw.TextStyle(
                   fontSize: headerSize,
+                  font: font,
                   color: PdfColor.fromInt(headerColor),
                 ),
               ),
@@ -488,21 +501,22 @@ class Template_01 {
                   textColor,
                   subheaderSize,
                   textSize,
+                  font,
                 );
               })
             ]));
   }
 
   static pw.Widget Educations(
-    String Language,
-    int cvId,
-    int headerColor,
-    int subheaderColor,
-    int textColor,
-    double? headerSize,
-    double? subheaderSize,
-    double? textSize,
-  ) {
+      String Language,
+      int cvId,
+      int headerColor,
+      int subheaderColor,
+      int textColor,
+      double? headerSize,
+      double? subheaderSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
         margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: pw.Column(
@@ -512,6 +526,7 @@ class Template_01 {
                 getText('education', Language),
                 style: pw.TextStyle(
                   fontSize: headerSize,
+                  font: font,
                   color: PdfColor.fromInt(headerColor),
                 ),
               ),
@@ -525,23 +540,24 @@ class Template_01 {
                   textColor,
                   subheaderSize,
                   textSize,
+                  font,
                 );
               })
             ]));
   }
 
   static pw.Widget Languages(
-    String language,
-    int cvId,
-    int levelBackgroundColor,
-    int levelFillColor,
-    int headerColor,
-    int textColor,
-    double? levelBarHeight,
-    double? levelBarWidth,
-    double? headerSize,
-    double? textSize,
-  ) {
+      String language,
+      int cvId,
+      int levelBackgroundColor,
+      int levelFillColor,
+      int headerColor,
+      int textColor,
+      double? levelBarHeight,
+      double? levelBarWidth,
+      double? headerSize,
+      double? textSize,
+      pw.Font font) {
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -551,6 +567,7 @@ class Template_01 {
             getText('languages', language),
             style: pw.TextStyle(
               fontSize: headerSize,
+              font: font,
               color: PdfColor.fromInt(headerColor),
             ),
           ),
@@ -568,6 +585,7 @@ class Template_01 {
                   levelBarHeight,
                   levelBarWidth,
                   textSize,
+                  font,
                 );
               })
             ],
@@ -720,8 +738,6 @@ class Template_01 {
     double levelBarHeight,
     double levelBarWidth,
   ) async {
-    final pdf = pw.Document();
-
     String Language = st.CVs[cvId].CVlanguage;
 
     ByteData bytes = await rootBundle.load('assets/icons/address.png');
@@ -736,6 +752,24 @@ class Template_01 {
     phoneBL = bytes.buffer.asUint8List();
     bytes = await rootBundle.load('assets/icons/website.png');
     websiteBL = bytes.buffer.asUint8List();
+
+    ByteData fontData;
+    switch (st.CVs[cvId].CVlanguage) {
+      case 'ar':
+        fontData =
+            await rootBundle.load('assets/fonts/Arabic/Cairo-Variable.ttf');
+      case 'ru':
+        fontData =
+            await rootBundle.load('assets/fonts/Russian/Roboto-Regular.ttf');
+      case 'tu':
+        fontData = await rootBundle.load('assets/fonts/Outfit-Regular.ttf');
+      case 'hi':
+        fontData = await rootBundle.load('assets/fonts/Outfit-Regular.ttf');
+      default:
+        fontData = await rootBundle.load('assets/fonts/Outfit-Medium.ttf');
+    }
+    pw.Font font = pw.Font.ttf(fontData);
+
     File imageFile;
     if (st.CVs[cvId].personalInformation.picture != '' &&
         !st.CVs[cvId].personalInformation.defaultPicture) {
@@ -745,9 +779,13 @@ class Template_01 {
       ByteData bd = await rootBundle.load('assets/images/default_picture.jpg');
       Picture = bd.buffer.asUint8List();
     }
+    final pdf = pw.Document();
 
     pdf.addPage(
       pw.Page(
+        textDirection: (st.CVs[cvId].CVlanguage == 'ar')
+            ? pw.TextDirection.rtl
+            : pw.TextDirection.ltr,
         pageFormat: PdfPageFormat.a4,
         margin: pw.EdgeInsets.all(0),
         build: (pw.Context context) {
@@ -780,8 +818,15 @@ class Template_01 {
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          Contacts(Language, cvId, textColor, headersColor,
-                              headersSize, textSize),
+                          Contacts(
+                            Language,
+                            cvId,
+                            textColor,
+                            headersColor,
+                            headersSize,
+                            textSize,
+                            font,
+                          ),
                           References(
                             Language,
                             cvId,
@@ -791,23 +836,31 @@ class Template_01 {
                             headersSize,
                             subheadersSize,
                             textSize,
+                            font,
                           ),
                           pw.Text(
                             getText('interests', Language),
+                            textDirection: pw.TextDirection.rtl,
                             style: pw.TextStyle(
+                              font: font,
                               fontSize: headersSize,
                               color: PdfColor.fromInt(headersColor),
                             ),
                           ),
                           pw.Padding(
                             padding: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
-                            child: interests([
-                              ...st.CVs[cvId].interests.map(
-                                (el) {
-                                  return el;
-                                },
-                              ),
-                            ], accentColor, mainColor),
+                            child: interests(
+                              [
+                                ...st.CVs[cvId].interests.map(
+                                  (el) {
+                                    return el;
+                                  },
+                                ),
+                              ],
+                              accentColor,
+                              mainColor,
+                              font,
+                            ),
                           ),
                           Skills(
                             Language,
@@ -820,6 +873,7 @@ class Template_01 {
                             levelBarWidth,
                             headersSize,
                             textSize,
+                            font,
                           ),
                         ],
                       ),
@@ -842,6 +896,7 @@ class Template_01 {
                               st.CVs[cvId].personalInformation.fullName,
                               style: pw.TextStyle(
                                   fontSize: 56,
+                                  font: font,
                                   fontWeight: pw.FontWeight.bold,
                                   color: PdfColor.fromInt(nameColor)),
                             )),
@@ -851,6 +906,7 @@ class Template_01 {
                             getText('summary', Language),
                             style: pw.TextStyle(
                               fontSize: headersSize,
+                              font: font,
                               color: PdfColor.fromInt(headersColor),
                             ),
                           ),
@@ -860,6 +916,7 @@ class Template_01 {
                             child: pw.Text(
                                 style: pw.TextStyle(
                                   fontSize: textSize,
+                                  font: font,
                                   color: PdfColor.fromInt(textColor),
                                 ),
                                 st.CVs[cvId].summary)),
@@ -872,6 +929,7 @@ class Template_01 {
                           headersSize,
                           subheadersSize,
                           textSize,
+                          font,
                         ),
                         Educations(
                           Language,
@@ -882,6 +940,7 @@ class Template_01 {
                           headersSize,
                           subheadersSize,
                           textSize,
+                          font,
                         ),
                         Languages(
                           Language,
@@ -894,6 +953,7 @@ class Template_01 {
                           levelBarWidth,
                           headersSize,
                           textSize,
+                          font,
                         )
                       ],
                     ),

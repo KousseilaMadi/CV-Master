@@ -138,33 +138,34 @@ class Sections extends StatelessWidget {
             ),
           ),
           BottomPanelOneButton(
-              title: AppLocalizations.of(context)!.preview,
-              onpress: () => {
-                    if (!hasEmptyFields(cvId))
-                      {Navigate(context, Preview(cvId: cvId), true)}
-                    else
-                      {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            // surfaceTintColor: colors.highlight,
-                            title: Text(
-                                AppLocalizations.of(context)!.missingFields),
-                            content: Text(AppLocalizations.of(context)!
-                                .youCantPreviewBeforeFillingAllTheRequiredFields),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(AppLocalizations.of(context)!.ok),
-                              ),
-                            ],
-                          ),
-                        )
-                      }
-                  })
+            title: AppLocalizations.of(context)!.preview,
+            onpress: () => {
+              if (!hasEmptyFields(cvId))
+                {Navigate(context, Preview(cvId: cvId), true)}
+              else
+                {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      // surfaceTintColor: colors.highlight,
+                      title: Text(AppLocalizations.of(context)!.missingFields),
+                      content: Text(AppLocalizations.of(context)!
+                          .youCantPreviewBeforeFillingAllTheRequiredFields),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(AppLocalizations.of(context)!.ok),
+                        ),
+                      ],
+                    ),
+                  )
+                }
+            },
+            page: 'sections',
+          )
         ]),
       ),
       onWillPop: () async {

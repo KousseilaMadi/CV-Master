@@ -1,9 +1,11 @@
 import 'package:cv_maker/Pages/CV_Actions.dart';
 import 'package:cv_maker/Pages/Home.dart';
 import 'package:cv_maker/Pages/Sections.dart';
+import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
+import 'package:cv_maker/main.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
 import '../Components/BottomPanel/BottomPanelOneButton.dart';
@@ -12,8 +14,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class CV_Language extends StatefulWidget {
   int? cvId;
-
-  CV_Language({this.cvId, super.key});
+  String cameFrom;
+  CV_Language({this.cvId, required this.cameFrom, super.key});
 
   @override
   State<CV_Language> createState() => _CV_Language();
@@ -39,7 +41,8 @@ class _CV_Language extends State<CV_Language> {
       interests: [""],
       languages: [LanguagesT()],
       summary: "",
-      personalInformation: PersonalInformationT(),
+      personalInformation:
+          PersonalInformationT(picture: 'assets/images/default_picture.jpg'),
       references: [ReferencesT()],
       skills: [SkillsT()],
     ));
@@ -124,17 +127,23 @@ class _CV_Language extends State<CV_Language> {
         'image': 'Turkish.png'
       },
     ];
-    void onpress() {
-      if (widget.cvId == null) {
+    void onpress() async {
+      if (widget.cvId == null && widget.cameFrom == 'home') {
         int cvId = addCV();
         st.CVs[cvId].CVlanguage = languages[pressedBtn!]['code']!;
         writeToStorage();
         Navigate(context, Sections(cvId: cvId, cameFrom: 'cvLanguage'), true);
       } else {
-        print(languages[pressedBtn!]['code']!);
-        st.CVs[widget.cvId!].CVlanguage = languages[pressedBtn!]['code']!;
-        writeToStorage();
-        Navigate(context, CV_Actions(cvId: widget.cvId!), true);
+        if (widget.cvId != null && widget.cameFrom == 'cvActions') {
+          st.CVs[widget.cvId!].CVlanguage = languages[pressedBtn!]['code']!;
+          writeToStorage();
+          await Template_01.generateNoArgs(widget.cvId!);
+          Navigate(context, CV_Actions(cvId: widget.cvId!), true);
+        } else {
+          st.AppLanguage = languages[pressedBtn!]['code']!;
+          writeToStorage();
+          RestartWidget.restartApp(context);
+        }
       }
     }
 
@@ -161,6 +170,10 @@ class _CV_Language extends State<CV_Language> {
                   LanguageTag(cvId: widget.cvId),
                   ...languages.map(
                     (el) {
+                      if (widget.cameFrom == 'languageChangeButton' &&
+                          el['code'] == 'be') {
+                        return Center();
+                      }
                       return Container(
                         margin: EdgeInsets.all(2),
                         height: 70,
@@ -176,6 +189,11 @@ class _CV_Language extends State<CV_Language> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Text(
+                                el['lang']!,
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w400),
+                              ),
                               Container(
                                 height: 68,
                                 width: 68,
@@ -186,11 +204,6 @@ class _CV_Language extends State<CV_Language> {
                                           'assets/flags/${el['image']}'),
                                       fit: BoxFit.cover,
                                     )),
-                              ),
-                              Text(
-                                el['lang']!,
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
@@ -204,21 +217,22 @@ class _CV_Language extends State<CV_Language> {
                 ],
               ),
               BottomPanelOneButton(
-                  clickable: clickable,
-                  title: AppLocalizations.of(context)!.select,
-                  onpress: onpress),
+                clickable: clickable,
+                title: AppLocalizations.of(context)!.select,
+                onpress: onpress,
+                page: 'cvLanguage',
+              ),
             ],
           ),
         ),
       ),
       onWillPop: () async {
-        if (widget.cvId == null) {
+        try {
           Navigator.pop(context);
-        } else {
-          // Navigator.pop(context);
-
-          Navigate(context, CV_Actions(cvId: widget.cvId!), false);
+        } catch (e) {
+          print(e);
         }
+
         return true;
       },
     );

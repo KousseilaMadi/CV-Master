@@ -12,7 +12,7 @@ void main() async {
 
   await readFromStorage();
   await readFromCustomData();
-  runApp(App());
+  runApp(RestartWidget(child: App()));
 }
 
 class App extends StatelessWidget {
@@ -39,8 +39,9 @@ class App extends StatelessWidget {
         Locale('hi'),
         Locale('ar'),
       ],
+      locale: Locale(st.AppLanguage),
       theme: ThemeData(
-        fontFamily: 'Outfit',
+        fontFamily: 'Outfit' 'Arabic' 'Russian',
         colorScheme: ColorScheme.fromSeed(seedColor: colors.highlight),
         useMaterial3: true,
       ),
@@ -49,6 +50,36 @@ class App extends StatelessWidget {
       //       '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[0].personalInformation.fullName}_CV.pdf',
       // ),
       home: Home(),
+    );
+  }
+}
+
+class RestartWidget extends StatefulWidget {
+  final Widget child;
+  RestartWidget({required this.child});
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidget>()!.restartApp();
+  }
+
+  @override
+  _RestartWidget createState() => _RestartWidget();
+}
+
+class _RestartWidget extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
     );
   }
 }

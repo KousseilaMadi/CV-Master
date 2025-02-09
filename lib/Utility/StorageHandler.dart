@@ -371,8 +371,8 @@ class CV {
 
 class Storage {
   Storage({required this.AppLanguage, required this.CVs});
-  final String AppLanguage;
-  final List<CV> CVs;
+  String AppLanguage;
+  List<CV> CVs;
 
   factory Storage.fromJson(Map<String, dynamic> data) {
     final AppLanguage = data['AppLanguage'] as String;
