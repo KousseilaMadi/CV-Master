@@ -121,11 +121,11 @@ class _InterestsState extends State<Interests> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveInterests();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -138,7 +138,7 @@ class _InterestsState extends State<Interests> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.interests) {
-            unsavedChangesDialog(context, saveInterests());
+            unsavedChangesDialog(context, saveInterests);
           }
           return true;
         });

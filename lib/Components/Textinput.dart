@@ -74,12 +74,12 @@ class _Textinput extends State<Textinput> {
       return Container(
         height: 80,
         decoration: border,
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
         margin: EdgeInsets.fromLTRB(8, 0, 8, 4),
         child: TextField(
           onChanged: change,
           controller: widget.inputController,
-          cursorHeight: 26,
+          cursorHeight: 22,
           cursorColor: colors.primary,
           style: TextStyle(fontSize: 24, color: colors.primary),
           decoration: InputDecoration(
@@ -88,20 +88,20 @@ class _Textinput extends State<Textinput> {
             floatingLabelBehavior: FloatingLabelBehavior.always,
             labelText: widget.title,
             border: InputBorder.none,
-            labelStyle: TextStyle(fontSize: 28, color: colors.primary),
+            labelStyle: TextStyle(fontSize: 24, color: colors.primary),
           ),
         ),
       );
     }
     return Container(
       height: widget.heightValue ?? 180,
-      padding: EdgeInsets.all(10),
       decoration: border,
+      padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
       margin: EdgeInsets.fromLTRB(8, 0, 8, 4),
       child: TextField(
         onChanged: change,
         controller: widget.inputController,
-        cursorHeight: 26,
+        cursorHeight: 22,
         cursorColor: colors.primary,
         keyboardType: TextInputType.multiline,
         maxLines: 6,
@@ -112,7 +112,7 @@ class _Textinput extends State<Textinput> {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.title,
           border: InputBorder.none,
-          labelStyle: TextStyle(fontSize: 28, color: colors.primary),
+          labelStyle: TextStyle(fontSize: 24, color: colors.primary),
         ),
       ),
     );

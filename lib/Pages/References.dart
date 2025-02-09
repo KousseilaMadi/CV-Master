@@ -114,11 +114,11 @@ class _References extends State<References> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveReferences();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -131,7 +131,7 @@ class _References extends State<References> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.references) {
-            unsavedChangesDialog(context, saveReferences());
+            unsavedChangesDialog(context, saveReferences);
           }
           return true;
         });

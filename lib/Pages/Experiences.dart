@@ -119,11 +119,11 @@ class _ExperiencesState extends State<Experiences> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveExperiences();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -136,7 +136,7 @@ class _ExperiencesState extends State<Experiences> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.experiences) {
-            unsavedChangesDialog(context, experiences);
+            unsavedChangesDialog(context, saveExperiences);
           }
           return true;
         });

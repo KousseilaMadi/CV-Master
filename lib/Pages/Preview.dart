@@ -37,13 +37,6 @@ class Preview extends StatelessWidget {
         print('err:$err');
       }
     }
-
-    // if (status.isGranted) {
-    //   const downloadsFolderPath = '/storage/emulated/0/Download/';
-    //   Directory dir = Directory(downloadsFolderPath);
-    //   file = File(
-    //       '${dir.path}/${st.CVs[cvId].personalInformation.fullName}_CV.pdf');
-    // }
   }
 
   @override

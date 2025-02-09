@@ -121,11 +121,11 @@ class _EducationState extends State<Educations> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveEducation();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -138,7 +138,7 @@ class _EducationState extends State<Educations> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.education) {
-            unsavedChangesDialog(context, saveEducation());
+            unsavedChangesDialog(context, saveEducation);
           }
           return true;
         });

@@ -121,11 +121,11 @@ class _Skills extends State<Skills> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveSkills();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -138,7 +138,7 @@ class _Skills extends State<Skills> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.skills) {
-            unsavedChangesDialog(context, saveSkills());
+            unsavedChangesDialog(context, saveSkills);
           }
           return true;
         });

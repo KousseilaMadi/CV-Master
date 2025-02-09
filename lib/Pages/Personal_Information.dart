@@ -9,6 +9,7 @@ import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import '../Utility/Colors.dart';
 import '../Components/SectionsDrawer.dart';
 import '../Components/BottomPanel/BottomPanelTwoButtons.dart';
@@ -17,7 +18,7 @@ import '../Components/CustomButton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
+import 'package:image_cropper/image_cropper.dart';
 import '../Components/Textinput.dart';
 
 class PersonalInformation extends StatefulWidget {
@@ -67,8 +68,6 @@ class _PersonalInformation extends State<PersonalInformation> {
   pictureListener(bool defaultP, String value) {
     st.CVs[widget.cvId].personalInformation.picture = value;
     tmp.personalInformation.picture = value;
-    tmp.personalInformation.defaultPicture = defaultP;
-    st.CVs[widget.cvId].personalInformation.defaultPicture = defaultP;
   }
 
   nameListener(String value) {
@@ -98,15 +97,29 @@ class _PersonalInformation extends State<PersonalInformation> {
   Future<void> _pickImage() async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    File? croppedImage;
+    Directory dir = await getApplicationDocumentsDirectory();
+    File croppedImageFile = File(dir.path);
     if (image != null) {
-      setState(() {
-        pictureListener(false, image.path);
-        // _imageFile = File(image.path);
-      });
+      CroppedFile? croppedFile =
+          await ImageCropper().cropImage(sourcePath: image.path, uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: colors.primary,
+          toolbarWidgetColor: colors.white,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+          ],
+        ),
+      ]);
+
+      if (croppedFile != null) {
+        pictureListener(false, croppedFile.path);
+        setState(() {});
+      }
     } else {
       pictureListener(true, 'assets/images/default_picture.jpg');
-
-      // _imageFile = File('assets/images/default_picture.jpg');
     }
   }
 
@@ -254,11 +267,11 @@ class _PersonalInformation extends State<PersonalInformation> {
                   onpreview: () {
                     if (!hasEmptyFields(widget.cvId)) {
                       if (!hasUnsavedChanges(memory.currentSection)) {
-                        Navigate(context, Preview(cvId: widget.cvId), true);
+                        Navigate(context, Preview(cvId: widget.cvId));
                       } else {
                         previewUnsavedChangesDialog(context, () {
                           savePersonalInformation();
-                          Navigate(context, Preview(cvId: widget.cvId), true);
+                          Navigate(context, Preview(cvId: widget.cvId));
                         });
                       }
                     } else {
@@ -275,11 +288,19 @@ class _PersonalInformation extends State<PersonalInformation> {
             )),
         onWillPop: () async {
           if (memory.unsavedChanges.personalInformation) {
-            unsavedChangesDialog(context, savePersonalInformation());
+            unsavedChangesDialog(context, savePersonalInformation);
           }
           return true;
         });
   }
+}
+
+class CropAspectRatioPresetCustom implements CropAspectRatioPresetData {
+  @override
+  (int, int)? get data => (2, 3);
+
+  @override
+  String get name => '2x3 (customized)';
 }
 
 // ignore: must_be_immutable

@@ -81,11 +81,11 @@ class _Summary extends State<Summary> {
                 onpreview: () {
                   if (!hasEmptyFields(widget.cvId)) {
                     if (!hasUnsavedChanges(memory.currentSection)) {
-                      Navigate(context, Preview(cvId: widget.cvId), true);
+                      Navigate(context, Preview(cvId: widget.cvId));
                     } else {
                       previewUnsavedChangesDialog(context, () {
                         saveSummary();
-                        Navigate(context, Preview(cvId: widget.cvId), true);
+                        Navigate(context, Preview(cvId: widget.cvId));
                       });
                     }
                   } else {
@@ -106,7 +106,7 @@ class _Summary extends State<Summary> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.summary) {
-            unsavedChangesDialog(context, saveSummary());
+            unsavedChangesDialog(context, saveSummary);
           }
           return true;
         });

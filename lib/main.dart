@@ -41,7 +41,7 @@ class App extends StatelessWidget {
       ],
       locale: Locale(st.AppLanguage),
       theme: ThemeData(
-        fontFamily: 'Outfit' 'Arabic' 'Russian',
+        fontFamily: 'Outfit',
         colorScheme: ColorScheme.fromSeed(seedColor: colors.highlight),
         useMaterial3: true,
       ),

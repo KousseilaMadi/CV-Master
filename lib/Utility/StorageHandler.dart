@@ -61,6 +61,7 @@ Storage st = Storage(AppLanguage: 'en', CVs: []);
 CustomData cd = CustomData(customs: []);
 CV tmp = CV(
     temp: 1,
+    creationTime: '',
     CVlanguage: 'en',
     personalInformation: PersonalInformationT(),
     educations: [EducationsT()],
@@ -73,7 +74,6 @@ CV tmp = CV(
 
 class PersonalInformationT {
   PersonalInformationT({
-    this.defaultPicture = true,
     this.picture = 'assets/images/default_picture.jpg',
     this.fullName = '',
     this.address = '',
@@ -82,7 +82,6 @@ class PersonalInformationT {
     this.linkedin = '',
     this.website = '',
   });
-  bool defaultPicture;
   String picture;
   String fullName;
   String address;
@@ -92,7 +91,6 @@ class PersonalInformationT {
   String website;
 
   factory PersonalInformationT.fromJson(Map<String, dynamic> data) {
-    bool defaultPicture = data['defaultPicture'] as bool;
     String picture = data['picture'] as String;
     String fullName = data['fullName'] as String;
     String address = data['address'] as String;
@@ -101,7 +99,6 @@ class PersonalInformationT {
     String linkedin = data['linkedin'] as String;
     String website = data['website'] as String;
     return PersonalInformationT(
-        defaultPicture: defaultPicture,
         picture: picture,
         fullName: fullName,
         address: address,
@@ -112,7 +109,6 @@ class PersonalInformationT {
   }
   Map<String, dynamic> toJson() {
     return {
-      "defaultPicture": defaultPicture,
       "picture": picture,
       "fullName": fullName,
       "address": address,
@@ -291,6 +287,7 @@ class ReferencesT {
 class CV {
   CV({
     required this.temp,
+    required this.creationTime,
     required this.CVlanguage,
     required this.personalInformation,
     required this.educations,
@@ -302,6 +299,7 @@ class CV {
     required this.references,
   });
   int temp;
+  String creationTime;
   String CVlanguage;
   PersonalInformationT personalInformation;
   List<EducationsT> educations;
@@ -314,6 +312,7 @@ class CV {
 
   factory CV.fromJson(Map<String, dynamic> data) {
     int temp = data['temp'] as int;
+    String creationTime = data['creationgTime'] as String;
     String CVlanguage = data['CVlanguage'] as String;
     Map<String, dynamic> personalInformation =
         data['personalInformation'] ?? PersonalInformationT();
@@ -331,6 +330,7 @@ class CV {
 
     return CV(
       temp: temp,
+      creationTime: creationTime,
       CVlanguage: CVlanguage,
       personalInformation: PersonalInformationT.fromJson(personalInformation),
       educations: educations
@@ -356,6 +356,7 @@ class CV {
   Map<String, dynamic> toJson() {
     return {
       "temp": temp,
+      "creationTime": creationTime,
       "CVlanguage": CVlanguage,
       "personalInformation": personalInformation,
       "educations": educations,

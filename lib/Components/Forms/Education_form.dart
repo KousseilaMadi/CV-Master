@@ -54,9 +54,12 @@ class EducationForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          '#${id + 1}',
-          style: TextStyle(fontSize: 28),
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Text(
+            '#${id + 1}',
+            style: TextStyle(fontSize: 28),
+          ),
         ),
         Textinput(
           type: InputType.nocomment,

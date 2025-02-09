@@ -84,16 +84,14 @@ class CV_Actions extends StatelessWidget {
                                 Sections(
                                   cvId: cvId,
                                   cameFrom: 'cvActions',
-                                ),
-                                false)
+                                ))
                           },
                         ),
                         Button(
                           width: 45,
                           title: AppLocalizations.of(context)!.customize,
-                          onpress: () => {
-                            Navigate(context, Customization(cvId: cvId), false)
-                          },
+                          onpress: () =>
+                              {Navigate(context, Customization(cvId: cvId))},
                         )
                       ],
                     ),
@@ -105,8 +103,7 @@ class CV_Actions extends StatelessWidget {
                             CV_Language(
                               cvId: cvId,
                               cameFrom: 'cvActions',
-                            ),
-                            true)
+                            ))
                       },
                     ),
                     Button(
@@ -123,7 +120,7 @@ class CV_Actions extends StatelessWidget {
       onWillPop: () async {
         Navigator.pop(context);
         Navigator.pop(context);
-        Navigate(context, Home(), false);
+        Navigate(context, Home());
         return true;
       },
     );

@@ -771,8 +771,8 @@ class Template_01 {
     pw.Font font = pw.Font.ttf(fontData);
 
     File imageFile;
-    if (st.CVs[cvId].personalInformation.picture != '' &&
-        !st.CVs[cvId].personalInformation.defaultPicture) {
+    if (st.CVs[cvId].personalInformation.picture !=
+        'assets/images/default_picture.jpg') {
       imageFile = File(st.CVs[cvId].personalInformation.picture);
       Picture = await imageFile.readAsBytes();
     } else {

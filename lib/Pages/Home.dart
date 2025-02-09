@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:cv_maker/Components/CustomButton.dart';
 import 'package:cv_maker/Pages/CV_Language.dart';
 import 'package:cv_maker/Pages/CV_Actions.dart';
+import 'package:cv_maker/Pages/Preview.dart';
+import 'package:cv_maker/Pages/Sections.dart';
 import 'package:cv_maker/Utility/CvGen.dart';
+import 'package:cv_maker/Utility/Enums.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
@@ -17,14 +21,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onpress() {
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => CV_Language()));
       Navigate(
           context,
           CV_Language(
             cameFrom: 'home',
-          ),
-          false);
+          ));
     }
 
     return Scaffold(
@@ -38,33 +39,49 @@ class Home extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.home),
         backgroundColor: colors.primary,
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigate(
-            context,
-            CV_Language(
-              cameFrom: 'languageChangeButton',
-            ),
-            false);
-      }),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Positioned(
-                left: 0,
-                top: 0,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Your CVs:',
-                    style: TextStyle(fontSize: 26),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      '${AppLocalizations.of(context)!.yourCvs}:',
+                      style: TextStyle(fontSize: 26),
+                    ),
                   ),
-                )),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: IconButton.filled(
+                    onPressed: () {
+                      Navigate(
+                          context,
+                          CV_Language(
+                            cameFrom: 'languageChangeButton',
+                          ));
+                    },
+                    icon: Icon(Icons.translate_rounded),
+                    color: colors.white,
+                    style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStatePropertyAll(colors.primary)),
+                    iconSize: 32,
+                  ),
+                )
+              ],
+            ),
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: colors.secondary),
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color.fromARGB(255, 233, 238, 243)),
                 width: percent(92, 'w', context),
                 height: percent(80, 'h', context),
                 child: CVsList(),
@@ -102,6 +119,9 @@ class CVsList extends StatelessWidget {
               cvInstance(cv: cv)
             ]);
           }),
+          SizedBox(
+            height: 120,
+          )
         ],
       );
     }
@@ -146,49 +166,82 @@ class cvInstance extends StatelessWidget {
     return Center(
       child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: colors.secondary,
+            borderRadius: BorderRadius.circular(15),
+            color: Color(0xffbdc3c7),
           ),
-          height: percent(18, 'h', context),
-          width: percent(100, 'w', context),
-          child: Stack(
+          height: percent(20, 'h', context),
+          width: percent(90, 'w', context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: percent(35, 'w', context) / 2,
-                    height: percent(35, 'w', context) / 2,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.grey[600],
-                    ),
-                    margin: EdgeInsets.fromLTRB(percent(2, 'w', context) / 2,
-                        percent(5, 'w', context) / 2, 0, 0),
+                  Padding(
+                    padding: EdgeInsets.all(10),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Picture(
-                          defaultP: cv.personalInformation.defaultPicture,
-                          path: cv.personalInformation.picture),
-                    ),
+                        borderRadius: BorderRadius.circular(100),
+                        child: Picture(path: cv.personalInformation.picture)),
                   ),
                   Padding(
-                      padding: EdgeInsets.all(12),
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
+                    child: Text(
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, color: Colors.grey[600]),
+                      getLang(cv.CVlanguage),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(6, 6, 6, 0),
                       child: Text(
                         cv.personalInformation.fullName,
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w700),
-                      ))
-                ],
-              ),
-              Positioned(
-                bottom: 8,
-                right: 12,
-                child: Text(
-                  getLang(cv.CVlanguage),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: colors.primary),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        CustomButton(() {
+                          Navigate(context, Preview(cvId: st.CVs.indexOf(cv)));
+                        },
+                            AppLocalizations.of(context)!.preview,
+                            42,
+                            height: 40,
+                            Icons.preview,
+                            ButtonType.text),
+                        CustomButton(
+                            fgcolor: colors.primary, bgcolor: colors.white, () {
+                          Navigate(
+                              context, CV_Actions(cvId: st.CVs.indexOf(cv)));
+                        },
+                            AppLocalizations.of(context)!.edit,
+                            42,
+                            height: 40,
+                            Icons.preview,
+                            ButtonType.text),
+                      ],
+                    ),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 6),
+                        child: Text(
+                            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}  ${DateTime.now().hour}:${DateTime.now().minute}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[600]))),
+                  ],
                 ),
-              )
+              ),
             ],
           )),
     );
@@ -198,18 +251,21 @@ class cvInstance extends StatelessWidget {
 // ignore: must_be_immutable
 class Picture extends StatelessWidget {
   String path;
-  bool defaultP;
-  Picture({required this.defaultP, required this.path, super.key});
+  Picture({required this.path, super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (!defaultP && path != '') {
+    if (path != 'assets/images/default_picture.jpg') {
       return Image(
+        height: 110,
+        width: 110,
         image: FileImage(File(path)),
         fit: BoxFit.cover,
       );
     } else {
       return Image(
+        height: 110,
+        width: 110,
         image: AssetImage('assets/images/default_picture.jpg'),
         fit: BoxFit.cover,
       );

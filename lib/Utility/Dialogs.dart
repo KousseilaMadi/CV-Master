@@ -4,7 +4,7 @@ import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void unsavedChangesDialog(BuildContext context, void onsave) {
+void unsavedChangesDialog(BuildContext context, Function onsave) {
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -16,7 +16,7 @@ void unsavedChangesDialog(BuildContext context, void onsave) {
       actions: [
         TextButton(
           onPressed: () {
-            onsave;
+            onsave();
             Navigator.pop(context);
           },
           child: Text(AppLocalizations.of(context)!.save),
@@ -138,7 +138,7 @@ void deleteConfirmationDialog(BuildContext context, int cvId) {
           onPressed: () {
             Navigator.pop(context);
             Navigator.pop(context);
-            Navigate(context, Home(), false);
+            Navigate(context, Home());
             cd.customs.removeAt(cvId);
             st.CVs.removeAt(cvId);
             writeToStorage();

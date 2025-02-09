@@ -35,6 +35,8 @@ class _CV_Language extends State<CV_Language> {
   int addCV() {
     st.CVs.add(CV(
       temp: 1,
+      creationTime:
+          '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}  ${DateTime.now().hour}:${DateTime.now().minute}',
       CVlanguage: '',
       educations: [EducationsT()],
       experiences: [ExperiencesT()],
@@ -46,6 +48,7 @@ class _CV_Language extends State<CV_Language> {
       references: [ReferencesT()],
       skills: [SkillsT()],
     ));
+
     cd.customs.add(Data(
         nameColor: 0xff212121,
         mainColor: 0xffacbcb6,
@@ -132,13 +135,16 @@ class _CV_Language extends State<CV_Language> {
         int cvId = addCV();
         st.CVs[cvId].CVlanguage = languages[pressedBtn!]['code']!;
         writeToStorage();
-        Navigate(context, Sections(cvId: cvId, cameFrom: 'cvLanguage'), true);
+        Navigator.pop(context);
+        Navigate(context, Sections(cvId: cvId, cameFrom: 'cvLanguage'));
       } else {
         if (widget.cvId != null && widget.cameFrom == 'cvActions') {
           st.CVs[widget.cvId!].CVlanguage = languages[pressedBtn!]['code']!;
           writeToStorage();
           await Template_01.generateNoArgs(widget.cvId!);
-          Navigate(context, CV_Actions(cvId: widget.cvId!), true);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigate(context, CV_Actions(cvId: widget.cvId!));
         } else {
           st.AppLanguage = languages[pressedBtn!]['code']!;
           writeToStorage();
@@ -155,16 +161,19 @@ class _CV_Language extends State<CV_Language> {
           titleTextStyle: TextStyle(fontSize: 28),
           centerTitle: true,
           toolbarHeight: 56,
-          title: Text(AppLocalizations.of(context)!.cvLanguage),
+          title: Text((widget.cameFrom == 'languageChangeButton')
+              ? 'App Language'
+              : 'CV Language'),
           backgroundColor: colors.primary,
         ),
         body: Container(
           height: percent(100, 'h', context),
           width: percent(100, 'w', context),
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             children: [
-              ListView(
+              Positioned(
+                  child: ListView(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                 children: [
                   LanguageTag(cvId: widget.cvId),
@@ -215,13 +224,14 @@ class _CV_Language extends State<CV_Language> {
                     height: 140,
                   )
                 ],
-              ),
-              BottomPanelOneButton(
+              )),
+              Positioned(
+                  child: BottomPanelOneButton(
                 clickable: clickable,
                 title: AppLocalizations.of(context)!.select,
                 onpress: onpress,
                 page: 'cvLanguage',
-              ),
+              )),
             ],
           ),
         ),

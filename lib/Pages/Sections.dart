@@ -103,45 +103,48 @@ class Sections extends StatelessWidget {
           title: Text(AppLocalizations.of(context)!.sections),
           backgroundColor: colors.primary,
         ),
-        body: Stack(alignment: Alignment.center, children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(3, 12, 3, 0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    // height: 40,
-                    // width: 70,
-                    margin: EdgeInsets.fromLTRB(12, 4, 0, 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: colors.gold,
-                    ),
-                    padding: EdgeInsets.fromLTRB(8, 4, 8, 6),
-                    child: Text(
-                      getLang(st.CVs[cvId].CVlanguage),
-                      style: TextStyle(fontSize: 22),
+        body: Stack(alignment: Alignment.bottomCenter, children: [
+          Positioned(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(3, 12, 3, 0),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      // height: 40,
+                      // width: 70,
+                      margin: EdgeInsets.fromLTRB(12, 4, 0, 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: colors.gold,
+                      ),
+                      padding: EdgeInsets.fromLTRB(8, 4, 8, 6),
+                      child: Text(
+                        getLang(st.CVs[cvId].CVlanguage),
+                        style: TextStyle(fontSize: 22),
+                      ),
                     ),
                   ),
-                ),
-                ...sections.map((el) {
-                  return Section(
-                    title: el['name'],
-                    goto: el['widget'],
-                  );
-                }),
-                SizedBox(
-                  height: 150,
-                ),
-              ],
+                  ...sections.map((el) {
+                    return Section(
+                      title: el['name'],
+                      goto: el['widget'],
+                    );
+                  }),
+                  SizedBox(
+                    height: 150,
+                  ),
+                ],
+              ),
             ),
           ),
-          BottomPanelOneButton(
+          Positioned(
+              child: BottomPanelOneButton(
             title: AppLocalizations.of(context)!.preview,
             onpress: () => {
               if (!hasEmptyFields(cvId))
-                {Navigate(context, Preview(cvId: cvId), true)}
+                {Navigate(context, Preview(cvId: cvId))}
               else
                 {
                   showDialog(
@@ -165,28 +168,26 @@ class Sections extends StatelessWidget {
                 }
             },
             page: 'sections',
-          )
+          ))
         ]),
       ),
       onWillPop: () async {
         Navigator.pop(context);
-        print(cameFrom);
         if (cameFrom != null) {
           if (cameFrom == 'cvActions') {
-            // Navigator.pop(context);
+            Navigator.pop(context);
             Navigate(
                 context,
                 CV_Actions(
                   cvId: cvId,
-                ),
-                false);
+                ));
           }
           if (cameFrom == 'cvLanguage') {
             Navigator.pop(context);
-            Navigate(context, Home(), false);
+            Navigate(context, Home());
           }
         } else {
-          Navigate(context, Home(), false);
+          Navigate(context, Home());
         }
         return true;
       },

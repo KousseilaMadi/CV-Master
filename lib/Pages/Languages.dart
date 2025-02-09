@@ -118,11 +118,11 @@ class _LanguageState extends State<Languages> {
             onpreview: () {
               if (!hasEmptyFields(widget.cvId)) {
                 if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId), true);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   previewUnsavedChangesDialog(context, () {
                     saveLanguages();
-                    Navigate(context, Preview(cvId: widget.cvId), true);
+                    Navigate(context, Preview(cvId: widget.cvId));
                   });
                 }
               } else {
@@ -135,7 +135,7 @@ class _LanguageState extends State<Languages> {
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.languages) {
-            unsavedChangesDialog(context, saveLanguages());
+            unsavedChangesDialog(context, saveLanguages);
           }
           return true;
         });

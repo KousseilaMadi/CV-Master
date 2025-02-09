@@ -67,7 +67,7 @@ class _Customization extends State<Customization> {
               onPressed: () async {
                 if (!hasEmptyFields(widget.cvId)) {
                   await Template_01.generateNoArgs(widget.cvId);
-                  Navigate(context, Preview(cvId: widget.cvId), false);
+                  Navigate(context, Preview(cvId: widget.cvId));
                 } else {
                   missingFieldsDialog(context);
                 }
