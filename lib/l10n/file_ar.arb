@@ -90,5 +90,10 @@
   "no": "لا",
   "name": "الإسم",
   "reset": "إعادة ضبط",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "هل تريد إعادة تعيين الألوان والأحجام إلى القيم الأولية؟"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "هل تريد إعادة تعيين الألوان والأحجام إلى القيم الأولية؟",
+  "youDontHaveAny": "ليس لديك أي",
+  "clickPlusToAdd": "انقر + لإضافة",
+  "error": "خطأ",
+  "fileSaved": "محفوظ",
+  "savedIn": "محفوظ في"
 }

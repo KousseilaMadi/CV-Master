@@ -90,5 +90,10 @@
     "no": "No",
     "name": "Name",
     "reset": "Reset",
-    "doYouWantToResetTheColorsAndSizesToDefaultValues": "Do you want to reset the colors and sizes to default values ?"
+    "doYouWantToResetTheColorsAndSizesToDefaultValues": "Do you want to reset the colors and sizes to default values ?",
+    "youDontHaveAny":"You don't have Any",
+    "clickPlusToAdd":"Click + to Add",
+    "error":"Error",
+    "fileSaved":"File saved",
+    "savedIn":"Saved in"
 }

@@ -134,7 +134,6 @@ class _PersonalInformation extends State<PersonalInformation> {
     // ignore: deprecated_member_use
     return WillPopScope(
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
             backgroundColor: colors.white,
             appBar: AppBar(
               foregroundColor: colors.white,
@@ -225,6 +224,7 @@ class _PersonalInformation extends State<PersonalInformation> {
                       ),
                     ),
                     Textinput(
+                      field: 'phoneNumber',
                       type: InputType.nocomment,
                       title: '${AppLocalizations.of(context)!.phoneNumber}*',
                       onchange: phoneNumberListener,
@@ -256,7 +256,8 @@ class _PersonalInformation extends State<PersonalInformation> {
                       onchange: websiteListener,
                       inputController: websiteController,
                       tmpValue: st.CVs[widget.cvId].personalInformation.website,
-                      section: 'personalInformation',
+                      section:
+                          AppLocalizations.of(context)!.personalInformation,
                     ),
                     SizedBox(
                       height: 120,
@@ -265,17 +266,13 @@ class _PersonalInformation extends State<PersonalInformation> {
                 ),
                 BottomPanelTwoButtons(
                   onpreview: () {
-                    if (!hasEmptyFields(widget.cvId)) {
-                      if (!hasUnsavedChanges(memory.currentSection)) {
-                        Navigate(context, Preview(cvId: widget.cvId));
-                      } else {
-                        previewUnsavedChangesDialog(context, () {
-                          savePersonalInformation();
-                          Navigate(context, Preview(cvId: widget.cvId));
-                        });
-                      }
+                    if (!hasUnsavedChanges(memory.currentSection)) {
+                      Navigate(context, Preview(cvId: widget.cvId));
                     } else {
-                      missingFieldsDialog(context);
+                      previewUnsavedChangesDialog(context, () {
+                        savePersonalInformation();
+                        Navigate(context, Preview(cvId: widget.cvId));
+                      });
                     }
                   },
                   title2ndBtn: AppLocalizations.of(context)!.save,

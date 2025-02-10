@@ -35,7 +35,6 @@ Future readFromStorage() async {
     writeToStorage();
   }
   String content = await file.readAsString();
-  print('content$content');
   if (content != '') st = Storage.fromJson(json.decode(content));
 }
 
@@ -53,7 +52,6 @@ Future readFromCustomData() async {
     writeToCustomData();
   }
   String content = await file.readAsString();
-  print('content$content');
   if (content != '') cd = CustomData.fromJson(json.decode(content));
 }
 
@@ -312,7 +310,7 @@ class CV {
 
   factory CV.fromJson(Map<String, dynamic> data) {
     int temp = data['temp'] as int;
-    String creationTime = data['creationgTime'] as String;
+    String creationTime = data['creationTime'] as String;
     String CVlanguage = data['CVlanguage'] as String;
     Map<String, dynamic> personalInformation =
         data['personalInformation'] ?? PersonalInformationT();

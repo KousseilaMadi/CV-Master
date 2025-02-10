@@ -38,15 +38,15 @@ class _CV_Language extends State<CV_Language> {
       creationTime:
           '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}  ${DateTime.now().hour}:${DateTime.now().minute}',
       CVlanguage: '',
-      educations: [EducationsT()],
-      experiences: [ExperiencesT()],
-      interests: [""],
-      languages: [LanguagesT()],
+      educations: [],
+      experiences: [],
+      interests: [],
+      languages: [],
       summary: "",
       personalInformation:
           PersonalInformationT(picture: 'assets/images/default_picture.jpg'),
-      references: [ReferencesT()],
-      skills: [SkillsT()],
+      references: [],
+      skills: [],
     ));
 
     cd.customs.add(Data(
@@ -141,7 +141,6 @@ class _CV_Language extends State<CV_Language> {
         if (widget.cvId != null && widget.cameFrom == 'cvActions') {
           st.CVs[widget.cvId!].CVlanguage = languages[pressedBtn!]['code']!;
           writeToStorage();
-          await Template_01.generateNoArgs(widget.cvId!);
           Navigator.pop(context);
           Navigator.pop(context);
           Navigate(context, CV_Actions(cvId: widget.cvId!));

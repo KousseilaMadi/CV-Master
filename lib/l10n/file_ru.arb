@@ -90,5 +90,10 @@
   "no": "Нет",
   "name": "Имя",
   "reset": "перезагрузить",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Хотите сбросить цвета и размеры до значений по умолчанию?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Хотите сбросить цвета и размеры до значений по умолчанию?",
+  "youDontHaveAny": "у вас нет",
+  "clickPlusToAdd": "нажмите +, чтобы добавить",
+  "error": "ошибка",
+  "fileSaved": "файл Сохранено",
+  "savedIn": "сохранено"
 }

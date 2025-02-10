@@ -9,6 +9,7 @@ import 'package:cv_maker/Pages/Personal_Information.dart';
 import 'package:cv_maker/Pages/Preview.dart';
 import 'package:cv_maker/Pages/References.dart';
 import 'package:cv_maker/Pages/Skills.dart';
+import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
@@ -142,31 +143,7 @@ class Sections extends StatelessWidget {
           Positioned(
               child: BottomPanelOneButton(
             title: AppLocalizations.of(context)!.preview,
-            onpress: () => {
-              if (!hasEmptyFields(cvId))
-                {Navigate(context, Preview(cvId: cvId))}
-              else
-                {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      // surfaceTintColor: colors.highlight,
-                      title: Text(AppLocalizations.of(context)!.missingFields),
-                      content: Text(AppLocalizations.of(context)!
-                          .youCantPreviewBeforeFillingAllTheRequiredFields),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(AppLocalizations.of(context)!.ok),
-                        ),
-                      ],
-                    ),
-                  )
-                }
-            },
+            onpress: () => {Navigate(context, Preview(cvId: cvId))},
             page: 'sections',
           ))
         ]),

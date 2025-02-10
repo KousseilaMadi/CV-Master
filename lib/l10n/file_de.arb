@@ -89,5 +89,10 @@
   "no": "Nein",
   "name": "Name",
   "reset": "zurücksetzen",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Möchten Sie die Farben und Größen auf die Standardwerte zurücksetzen?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Möchten Sie die Farben und Größen auf die Standardwerte zurücksetzen?",
+  "youDontHaveAny": "Sie haben keine",
+  "clickPlusToAdd": "Klicken Sie auf +, um hinzuzufügen",
+  "error": "Fehler",
+  "fileSaved": "Datei Gespeichert",
+  "savedIn": "Gespeichert in"
 }

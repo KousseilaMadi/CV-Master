@@ -119,26 +119,28 @@ class _Skills extends State<Skills> {
             onremove: removeSkill,
             onsave: saveSkills,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveSkills();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveSkills();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'skills',
+            section: AppLocalizations.of(context)!.skills,
             cvId: widget.cvId,
           ),
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.skills) {
             unsavedChangesDialog(context, saveSkills);
+          }
+          for (var i = st.CVs[widget.cvId].skills.length - 1; i >= 0; i--) {
+            if (st.CVs[widget.cvId].skills[i].toJson().toString() ==
+                SkillsT().toJson().toString()) {
+              st.CVs[widget.cvId].skills.removeLast();
+            }
           }
           return true;
         });

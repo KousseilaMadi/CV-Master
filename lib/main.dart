@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await readFromStorage();
   await readFromCustomData();
   runApp(RestartWidget(child: App()));

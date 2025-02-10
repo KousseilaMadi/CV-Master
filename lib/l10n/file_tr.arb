@@ -90,5 +90,10 @@
   "no": "Hayir",
   "name": "İsim",
   "reset": "sıfırlama",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Renkleri ve boyutları varsayılan değerlere sıfırlamak ister misiniz?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Renkleri ve boyutları varsayılan değerlere sıfırlamak ister misiniz?",
+  "youDontHaveAny": "herhangi bir",
+  "clickPlusToAdd": "tıklamanız yok + Ekle",
+  "error": "hata",
+  "fileSaved": "dosya Kaydedildi",
+  "savedIn": "kaydedildi"
 }

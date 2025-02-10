@@ -19,10 +19,10 @@ class Template_01 {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Padding(
-                    padding: pw.EdgeInsets.fromLTRB(10, 2, 10, 0),
+                    padding: pw.EdgeInsets.fromLTRB(4, 2, 4, 0),
                     child: pw.Image(pw.MemoryImage(icon), height: iconSize)),
                 pw.Container(
-                    width: 182,
+                    width: 180,
                     child: pw.Text(
                       text ?? '',
                       style: pw.TextStyle(
@@ -272,6 +272,8 @@ class Template_01 {
       String endDate,
       String unviersity,
       String comment,
+      String grade,
+      String degree,
       int subheaderColor,
       int textColor,
       double? subheaderSize,
@@ -311,24 +313,32 @@ class Template_01 {
           ]);
     }
     return pw.Padding(
-        padding: pw.EdgeInsets.fromLTRB(6, 10, 0, 0),
-        child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    dates,
-                  ]),
-              pw.Text(
-                comment,
-                style: pw.TextStyle(
-                  fontSize: textSize,
-                  font: font,
-                  color: PdfColor.fromInt(textColor),
-                ),
-              ),
-            ]));
+      padding: pw.EdgeInsets.fromLTRB(6, 10, 0, 0),
+      child:
+          pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        dates,
+        pw.Text(
+          comment,
+          style: pw.TextStyle(
+            fontSize: textSize,
+            font: font,
+            color: PdfColor.fromInt(textColor),
+          ),
+        ),
+        pw.Text(degree,
+            style: pw.TextStyle(
+              fontSize: textSize,
+              font: font,
+              color: PdfColor.fromInt(textColor),
+            )),
+        pw.Text(grade,
+            style: pw.TextStyle(
+              fontSize: textSize,
+              font: font,
+              color: PdfColor.fromInt(textColor),
+            )),
+      ]),
+    );
   }
 
   static Uint8List? addressBL;
@@ -394,6 +404,8 @@ class Template_01 {
       double? subheaderSize,
       double? textSize,
       pw.Font font) {
+    if (st.CVs[cvId].references.isEmpty) return pw.Center();
+
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -436,6 +448,8 @@ class Template_01 {
       double? headerSize,
       double? textSize,
       pw.Font font) {
+    if (st.CVs[cvId].skills.isEmpty) return pw.Center();
+
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -477,6 +491,7 @@ class Template_01 {
       double? subheaderSize,
       double? textSize,
       pw.Font font) {
+    if (st.CVs[cvId].experiences.isEmpty) return pw.Center();
     return pw.Container(
         margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: pw.Column(
@@ -517,6 +532,7 @@ class Template_01 {
       double? subheaderSize,
       double? textSize,
       pw.Font font) {
+    if (st.CVs[cvId].educations.isEmpty) return pw.Center();
     return pw.Container(
         margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: pw.Column(
@@ -536,6 +552,8 @@ class Template_01 {
                   el.endDate,
                   el.university,
                   el.comment,
+                  el.grade,
+                  el.degree,
                   subheaderColor,
                   textColor,
                   subheaderSize,
@@ -558,6 +576,7 @@ class Template_01 {
       double? headerSize,
       double? textSize,
       pw.Font font) {
+    if (st.CVs[cvId].languages.isEmpty) return pw.Center();
     return pw.Container(
       margin: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
       child: pw.Column(
@@ -704,8 +723,8 @@ class Template_01 {
     return '';
   }
 
-  static Future<void> generateNoArgs(int cvId) async {
-    await Template_01.generate(
+  static void generateNoArgs(int cvId) {
+    Template_01.generate(
         cvId,
         cd.customs[cvId].nameColor,
         cd.customs[cvId].mainColor,
@@ -722,7 +741,7 @@ class Template_01 {
         cd.customs[cvId].levelBarWidth);
   }
 
-  static Future<void> generate(
+  static void generate(
     cvId,
     int nameColor,
     int mainColor,
@@ -838,15 +857,17 @@ class Template_01 {
                             textSize,
                             font,
                           ),
-                          pw.Text(
-                            getText('interests', Language),
-                            textDirection: pw.TextDirection.rtl,
-                            style: pw.TextStyle(
-                              font: font,
-                              fontSize: headersSize,
-                              color: PdfColor.fromInt(headersColor),
-                            ),
-                          ),
+                          (st.CVs[cvId].interests.isEmpty)
+                              ? pw.Center()
+                              : pw.Text(
+                                  getText('interests', Language),
+                                  textDirection: pw.TextDirection.rtl,
+                                  style: pw.TextStyle(
+                                    font: font,
+                                    fontSize: headersSize,
+                                    color: PdfColor.fromInt(headersColor),
+                                  ),
+                                ),
                           pw.Padding(
                             padding: pw.EdgeInsets.fromLTRB(0, 0, 0, 12),
                             child: interests(

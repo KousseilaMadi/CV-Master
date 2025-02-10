@@ -90,5 +90,10 @@
   "no": "Non",
   "name": "Nom",
   "reset": "réinitialiser",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Voulez-vous réinitialiser les couleurs et les tailles aux valeurs par défaut ?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "Voulez-vous réinitialiser les couleurs et les tailles aux valeurs par défaut ?",
+  "youDontHaveAny": "vous n'avez pas de",
+  "clickPlusToAdd": "cliquez sur + pour ajouter des",
+  "error": "erreur",
+  "fileSaved": "fichier enregistré",
+  "savedIn": "enregistré dans"
 }

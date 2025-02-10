@@ -112,26 +112,28 @@ class _References extends State<References> {
             onremove: removeReferences,
             onsave: saveReferences,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveReferences();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveReferences();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'references',
+            section: AppLocalizations.of(context)!.references,
             cvId: widget.cvId,
           ),
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.references) {
             unsavedChangesDialog(context, saveReferences);
+          }
+          for (var i = st.CVs[widget.cvId].references.length - 1; i >= 0; i--) {
+            if (st.CVs[widget.cvId].references[i].toJson().toString() ==
+                ReferencesT().toJson().toString()) {
+              st.CVs[widget.cvId].references.removeLast();
+            }
           }
           return true;
         });

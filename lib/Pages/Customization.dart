@@ -23,6 +23,7 @@ class Customization extends StatefulWidget {
 
 class _Customization extends State<Customization> {
   void setDefault() {
+    cd.customs[widget.cvId].nameColor = 0xff323232;
     cd.customs[widget.cvId].mainColor = 0xffacbcb6;
     cd.customs[widget.cvId].accentColor = 0xfffdfdfd;
     cd.customs[widget.cvId].levelBackgroundColor = 0xffd9d9d9;
@@ -41,10 +42,6 @@ class _Customization extends State<Customization> {
 
   @override
   Widget build(BuildContext context) {
-    for (var el in cd.customs) {
-      print(el.mainColor.toRadixString(16));
-    }
-
     return Center(
       child: Scaffold(
         appBar: AppBar(
@@ -65,12 +62,8 @@ class _Customization extends State<Customization> {
               backgroundColor: colors.primary,
               foregroundColor: colors.secondary,
               onPressed: () async {
-                if (!hasEmptyFields(widget.cvId)) {
-                  await Template_01.generateNoArgs(widget.cvId);
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  missingFieldsDialog(context);
-                }
+                Navigate(context, Preview(cvId: widget.cvId));
+
                 // setState(() {});
               },
               child: Text(
@@ -95,9 +88,7 @@ class _Customization extends State<Customization> {
                       ),
                       TextButton(
                           onPressed: () {
-                            confirmationDialog(context, () {
-                              setDefault();
-                            });
+                            confirmationDialog(context, setDefault);
                           },
                           child: Text(
                             AppLocalizations.of(context)!.reset,

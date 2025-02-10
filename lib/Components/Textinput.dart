@@ -1,5 +1,6 @@
 import 'package:cv_maker/Utility/Enums.dart';
 import 'package:cv_maker/Utility/Memory.dart';
+import 'package:cv_maker/Utility/isValidInput.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
 
@@ -11,6 +12,7 @@ class Textinput extends StatefulWidget {
   final TextEditingController inputController;
   final double? heightValue;
   final String? hint;
+  final String? field;
   String tmpValue;
   final String section;
 
@@ -19,6 +21,7 @@ class Textinput extends StatefulWidget {
       required this.title,
       required this.onchange,
       required this.inputController,
+      this.field,
       this.heightValue,
       this.hint,
       required this.tmpValue,
@@ -67,6 +70,8 @@ class _Textinput extends State<Textinput> {
         setUnsavedChanges(widget.section, false);
         border = nonEditedBorder;
       }
+      if (widget.field == 'phoneNumber') Isvalidinput.phoneNumber(v);
+
       setState(() {});
     }
 

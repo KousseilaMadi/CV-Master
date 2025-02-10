@@ -89,5 +89,10 @@
   "no": "नहीं",
   "name": "नाम",
   "reset": "रीसेट",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "क्या आप रंगों और आकारों को डिफ़ॉल्ट मानों पर रीसेट करना चाहते हैं?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "क्या आप रंगों और आकारों को डिफ़ॉल्ट मानों पर रीसेट करना चाहते हैं?",
+  "youDontHaveAny": "आपके पास कोई नहीं है।",
+  "clickPlusToAdd": "जोड़ने के लिए + क्लिक करें।",
+  "error": "त्रुटि।",
+  "fileSaved": "फ़ाइल सहेजी गई।",
+  "savedIn": "में सहेजी गई।"
 }

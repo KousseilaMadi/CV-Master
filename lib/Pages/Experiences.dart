@@ -117,26 +117,30 @@ class _ExperiencesState extends State<Experiences> {
             onremove: removeExperience,
             onsave: saveExperiences,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveExperiences();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveExperiences();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'experiences',
+            section: AppLocalizations.of(context)!.experiences,
             cvId: widget.cvId,
           ),
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.experiences) {
             unsavedChangesDialog(context, saveExperiences);
+          }
+          for (var i = st.CVs[widget.cvId].experiences.length - 1;
+              i >= 0;
+              i--) {
+            if (st.CVs[widget.cvId].experiences[i].toJson().toString() ==
+                ExperiencesT().toJson().toString()) {
+              st.CVs[widget.cvId].experiences.removeLast();
+            }
           }
           return true;
         });

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cv_maker/Pages/CV_Language.dart';
 import 'package:cv_maker/Pages/Customization.dart';
 import 'package:cv_maker/Pages/Home.dart';
@@ -14,30 +16,27 @@ import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
-class CV_Actions extends StatelessWidget {
+class CV_Actions extends StatefulWidget {
   int cvId;
   CV_Actions({required this.cvId, super.key});
+  @override
+  State<CV_Actions> createState() => _CV_Actions();
+}
 
+class _CV_Actions extends State<CV_Actions> {
   @override
   Widget build(BuildContext context) {
+    Template_01.generateNoArgs(widget.cvId);
     void deleteCv(int cvId) {
       deleteConfirmationDialog(context, cvId);
     }
 
-    Template_01.generateNoArgs(cvId);
     Widget? pdfPreview;
-    if (hasEmptyFields(cvId)) {
-      pdfPreview = Center(
-          child: Text(
-        AppLocalizations.of(context)!.pleaseFillAllRequiredFieldsToPreview,
-        textAlign: TextAlign.center,
-      ));
-    } else {
-      pdfPreview = PDFView(
-        filePath:
-            '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[cvId].personalInformation.fullName}_CV.pdf',
-      );
-    }
+    pdfPreview = PDFView(
+      fitPolicy: FitPolicy.BOTH,
+      filePath:
+          '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[widget.cvId].personalInformation.fullName}_CV.pdf',
+    );
     return WillPopScope(
       child: Scaffold(
         backgroundColor: colors.white,
@@ -82,7 +81,7 @@ class CV_Actions extends StatelessWidget {
                             Navigate(
                                 context,
                                 Sections(
-                                  cvId: cvId,
+                                  cvId: widget.cvId,
                                   cameFrom: 'cvActions',
                                 ))
                           },
@@ -90,8 +89,9 @@ class CV_Actions extends StatelessWidget {
                         Button(
                           width: 45,
                           title: AppLocalizations.of(context)!.customize,
-                          onpress: () =>
-                              {Navigate(context, Customization(cvId: cvId))},
+                          onpress: () => {
+                            Navigate(context, Customization(cvId: widget.cvId))
+                          },
                         )
                       ],
                     ),
@@ -101,14 +101,14 @@ class CV_Actions extends StatelessWidget {
                         Navigate(
                             context,
                             CV_Language(
-                              cvId: cvId,
+                              cvId: widget.cvId,
                               cameFrom: 'cvActions',
                             ))
                       },
                     ),
                     Button(
                       title: AppLocalizations.of(context)!.delete,
-                      onpress: () => {deleteCv(cvId)},
+                      onpress: () => {deleteCv(widget.cvId)},
                     ),
                   ],
                 ),

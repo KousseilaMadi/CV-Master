@@ -116,26 +116,28 @@ class _LanguageState extends State<Languages> {
             onremove: removeLanguage,
             onsave: saveLanguages,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveLanguages();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveLanguages();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'languages',
+            section: AppLocalizations.of(context)!.languages,
             cvId: widget.cvId,
           ),
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.languages) {
             unsavedChangesDialog(context, saveLanguages);
+          }
+          for (var i = st.CVs[widget.cvId].languages.length - 1; i >= 0; i--) {
+            if (st.CVs[widget.cvId].languages[i].toJson().toString() ==
+                LanguagesT().toJson().toString()) {
+              st.CVs[widget.cvId].languages.removeLast();
+            }
           }
           return true;
         });

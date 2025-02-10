@@ -4,6 +4,30 @@ import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+void customDialog(
+  BuildContext context,
+  String title,
+  String text,
+) {
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      // surfaceTintColor: colors.highlight,
+      title: Text(title),
+      content: Text(text),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(AppLocalizations.of(context)!.ok),
+        ),
+      ],
+    ),
+  );
+}
+
 void unsavedChangesDialog(BuildContext context, Function onsave) {
   showDialog(
     barrierDismissible: false,

@@ -5,7 +5,6 @@ import 'package:cv_maker/Pages/Preview.dart';
 import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
-import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import '../Utility/StorageHandler.dart';
 import 'package:cv_maker/Components/SectionsDrawer.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +45,7 @@ class _EducationState extends State<Educations> {
       st.CVs[widget.cvId].educations
           .add(EducationsT.fromJson(jsonDecode(jsonEncode(tmp.educations[i]))));
     }
+
     educations = [];
     setState(() {});
     writeToStorage();
@@ -119,20 +119,16 @@ class _EducationState extends State<Educations> {
             onremove: removeEducation,
             onsave: saveEducation,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveEducation();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveEducation();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'education',
+            section: AppLocalizations.of(context)!.education,
             cvId: widget.cvId,
           ),
         ),
@@ -140,6 +136,13 @@ class _EducationState extends State<Educations> {
           if (memory.unsavedChanges.education) {
             unsavedChangesDialog(context, saveEducation);
           }
+          for (var i = st.CVs[widget.cvId].educations.length - 1; i >= 0; i--) {
+            if (st.CVs[widget.cvId].educations[i].toJson().toString() ==
+                EducationsT().toJson().toString()) {
+              st.CVs[widget.cvId].educations.removeLast();
+            }
+          }
+
           return true;
         });
   }

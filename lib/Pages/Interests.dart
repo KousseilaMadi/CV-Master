@@ -119,26 +119,28 @@ class _InterestsState extends State<Interests> {
             onremove: removeInterest,
             onsave: saveInterests,
             onpreview: () {
-              if (!hasEmptyFields(widget.cvId)) {
-                if (!hasUnsavedChanges(memory.currentSection)) {
-                  Navigate(context, Preview(cvId: widget.cvId));
-                } else {
-                  previewUnsavedChangesDialog(context, () {
-                    saveInterests();
-                    Navigate(context, Preview(cvId: widget.cvId));
-                  });
-                }
+              if (!hasUnsavedChanges(memory.currentSection)) {
+                Navigate(context, Preview(cvId: widget.cvId));
               } else {
-                missingFieldsDialog(context);
+                previewUnsavedChangesDialog(context, () {
+                  saveInterests();
+                  Navigate(context, Preview(cvId: widget.cvId));
+                });
               }
             },
-            section: 'interests',
+            section: AppLocalizations.of(context)!.interests,
             cvId: widget.cvId,
           ),
         ),
         onWillPop: () async {
           if (memory.unsavedChanges.interests) {
             unsavedChangesDialog(context, saveInterests);
+          }
+          for (var i = st.CVs[widget.cvId].interests.length - 1; i >= 0; i--) {
+            print('value:${st.CVs[widget.cvId].interests[i].toString()}');
+            if (st.CVs[widget.cvId].interests[i].toString() == '') {
+              st.CVs[widget.cvId].interests.removeLast();
+            }
           }
           return true;
         });

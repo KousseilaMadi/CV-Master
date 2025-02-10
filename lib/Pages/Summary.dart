@@ -79,17 +79,13 @@ class _Summary extends State<Summary> {
               ),
               BottomPanelTwoButtons(
                 onpreview: () {
-                  if (!hasEmptyFields(widget.cvId)) {
-                    if (!hasUnsavedChanges(memory.currentSection)) {
-                      Navigate(context, Preview(cvId: widget.cvId));
-                    } else {
-                      previewUnsavedChangesDialog(context, () {
-                        saveSummary();
-                        Navigate(context, Preview(cvId: widget.cvId));
-                      });
-                    }
+                  if (!hasUnsavedChanges(memory.currentSection)) {
+                    Navigate(context, Preview(cvId: widget.cvId));
                   } else {
-                    missingFieldsDialog(context);
+                    previewUnsavedChangesDialog(context, () {
+                      saveSummary();
+                      Navigate(context, Preview(cvId: widget.cvId));
+                    });
                   }
                 },
                 title2ndBtn: AppLocalizations.of(context)!.save,

@@ -4,6 +4,7 @@ import 'package:cv_maker/Pages/Sections.dart';
 import 'package:cv_maker/Pages/Skills.dart';
 import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
+import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
 import '../Pages/References.dart';
@@ -134,12 +135,12 @@ class Tile extends StatelessWidget {
           tileColor: tileColor,
           onTap: () {
             if (!hasUnsavedChanges(memory.currentSection)) {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => goto));
+              Navigator.pop(context);
+              Navigate(context, goto);
             } else {
               drawerUnsavedChangesDialog(context, () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => goto));
+                Navigator.pop(context);
+                Navigate(context, goto);
               });
             }
           },

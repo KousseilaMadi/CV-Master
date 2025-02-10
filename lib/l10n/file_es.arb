@@ -90,5 +90,10 @@
   "no": "No",
   "name": "Nombre",
   "reset": "reiniciar",
-  "doYouWantToResetTheColorsAndSizesToDefaultValues": "¿Quieres restablecer los colores y tamaños a los valores predeterminados?"
+  "doYouWantToResetTheColorsAndSizesToDefaultValues": "¿Quieres restablecer los colores y tamaños a los valores predeterminados?",
+  "youDontHaveAny": "No tienes ninguno",
+  "clickPlusToAdd": "haz clic en + para añadir",
+  "error": "error",
+  "fileSaved": "archivo guardado",
+  "savedIn": "guardado en"
 }
