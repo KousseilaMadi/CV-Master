@@ -95,5 +95,9 @@
   "clickPlusToAdd": "clicca + per aggiungere",
   "error": "errore",
   "fileSaved": "file salvato",
-  "savedIn": "salvato in"
+  "savedIn": "salvato in",
+  "dateFieldIsntFormedCorrectly":"Il campo data non è formato correttamente",
+  "invalidFormat":"Formato non valido",
+  "phoneNumberFieldIsntFormedCorrectly":"Il campo numero di telefono non è formato correttamente",
+  "emailFieldIsntFormedCorrectly":"Il campo email non è formato correttamente"
 }

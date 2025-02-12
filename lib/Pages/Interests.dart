@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:cv_maker/Components/SectionPage.dart';
 import 'package:cv_maker/Pages/Preview.dart';
+import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Interest_form.dart';
 import '../Components/SectionsDrawer.dart';
@@ -51,6 +53,7 @@ class _InterestsState extends State<Interests> {
     setState(() {});
     writeToStorage();
     setUnsavedChanges('interests', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   void addInterest() {
@@ -118,7 +121,8 @@ class _InterestsState extends State<Interests> {
             onadd: addInterest,
             onremove: removeInterest,
             onsave: saveInterests,
-            onpreview: () {
+            onpreview: () async {
+              await Template_01.generateNoArgs(widget.cvId);
               if (!hasUnsavedChanges(memory.currentSection)) {
                 Navigate(context, Preview(cvId: widget.cvId));
               } else {

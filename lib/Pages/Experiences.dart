@@ -5,6 +5,8 @@ import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
+import 'package:cv_maker/Utility/isValidInput.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +43,21 @@ class _ExperiencesState extends State<Experiences> {
   }
 
   void saveExperiences() {
-    st.CVs[widget.cvId].experiences = [];
-    for (int i = 0; i < tmp.experiences.length; i++) {
-      st.CVs[widget.cvId].experiences.add(
-          ExperiencesT.fromJson(jsonDecode(jsonEncode(tmp.experiences[i]))));
+    if (checkIfDateIsValid()) {
+      st.CVs[widget.cvId].experiences = [];
+      for (int i = 0; i < tmp.experiences.length; i++) {
+        st.CVs[widget.cvId].experiences.add(
+            ExperiencesT.fromJson(jsonDecode(jsonEncode(tmp.experiences[i]))));
+      }
+      experiences = [];
+      setState(() {});
+      writeToStorage();
+      setUnsavedChanges('experiences', false);
+      Fluttertoast.showToast(msg: 'Saved');
+    } else {
+      customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+          AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
     }
-    experiences = [];
-    setState(() {});
-    writeToStorage();
-    setUnsavedChanges('experiences', false);
   }
 
   void addExperience() {
@@ -61,6 +69,16 @@ class _ExperiencesState extends State<Experiences> {
         () => setState(() {
               count++;
             }));
+  }
+
+  bool checkIfDateIsValid() {
+    for (var el in tmp.experiences) {
+      if ((el.startDate != '' && !Isvalidinput.date(el.startDate)) ||
+          (el.endDate != '' && !Isvalidinput.date(el.endDate))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   void removeExperience() {
@@ -117,13 +135,20 @@ class _ExperiencesState extends State<Experiences> {
             onremove: removeExperience,
             onsave: saveExperiences,
             onpreview: () {
-              if (!hasUnsavedChanges(memory.currentSection)) {
-                Navigate(context, Preview(cvId: widget.cvId));
-              } else {
-                previewUnsavedChangesDialog(context, () {
-                  saveExperiences();
+              if (checkIfDateIsValid()) {
+                if (!hasUnsavedChanges(memory.currentSection)) {
                   Navigate(context, Preview(cvId: widget.cvId));
-                });
+                } else {
+                  previewUnsavedChangesDialog(context, () {
+                    saveExperiences();
+                    Navigate(context, Preview(cvId: widget.cvId));
+                  });
+                }
+              } else {
+                customDialog(
+                    context,
+                    AppLocalizations.of(context)!.invalidFormat,
+                    AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
               }
             },
             section: AppLocalizations.of(context)!.experiences,
@@ -131,16 +156,21 @@ class _ExperiencesState extends State<Experiences> {
           ),
         ),
         onWillPop: () async {
-          if (memory.unsavedChanges.experiences) {
-            unsavedChangesDialog(context, saveExperiences);
-          }
-          for (var i = st.CVs[widget.cvId].experiences.length - 1;
-              i >= 0;
-              i--) {
-            if (st.CVs[widget.cvId].experiences[i].toJson().toString() ==
-                ExperiencesT().toJson().toString()) {
-              st.CVs[widget.cvId].experiences.removeLast();
+          if (checkIfDateIsValid()) {
+            if (memory.unsavedChanges.experiences) {
+              unsavedChangesDialog(context, saveExperiences);
             }
+            for (var i = st.CVs[widget.cvId].experiences.length - 1;
+                i >= 0;
+                i--) {
+              if (st.CVs[widget.cvId].experiences[i].toJson().toString() ==
+                  ExperiencesT().toJson().toString()) {
+                st.CVs[widget.cvId].experiences.removeLast();
+              }
+            }
+          } else {
+            customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+                AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
           }
           return true;
         });

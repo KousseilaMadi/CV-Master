@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:cv_maker/Components/SectionPage.dart';
 import 'package:cv_maker/Pages/Preview.dart';
+import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Language_form.dart';
 import '../Components/SectionsDrawer.dart';
@@ -49,6 +51,7 @@ class _LanguageState extends State<Languages> {
     setState(() {});
     writeToStorage();
     setUnsavedChanges('languages', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   void addLanguage() {
@@ -115,7 +118,8 @@ class _LanguageState extends State<Languages> {
             onadd: addLanguage,
             onremove: removeLanguage,
             onsave: saveLanguages,
-            onpreview: () {
+            onpreview: () async {
+              await Template_01.generateNoArgs(widget.cvId);
               if (!hasUnsavedChanges(memory.currentSection)) {
                 Navigate(context, Preview(cvId: widget.cvId));
               } else {

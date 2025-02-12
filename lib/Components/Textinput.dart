@@ -1,5 +1,6 @@
 import 'package:cv_maker/Utility/Enums.dart';
 import 'package:cv_maker/Utility/Memory.dart';
+import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/isValidInput.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
@@ -13,6 +14,7 @@ class Textinput extends StatefulWidget {
   final double? heightValue;
   final String? hint;
   final String? field;
+  final bool? accepted;
   String tmpValue;
   final String section;
 
@@ -23,6 +25,7 @@ class Textinput extends StatefulWidget {
       required this.inputController,
       this.field,
       this.heightValue,
+      this.accepted,
       this.hint,
       required this.tmpValue,
       required this.section,
@@ -51,6 +54,12 @@ class _Textinput extends State<Textinput> {
     border: Border.all(color: colors.secondary, width: 2),
     borderRadius: BorderRadius.circular(14),
   );
+
+  BoxDecoration unacceptableBorder = BoxDecoration(
+    color: Colors.redAccent,
+    border: Border.all(color: colors.secondary, width: 2),
+    borderRadius: BorderRadius.circular(14),
+  );
   @override
   Widget build(BuildContext context) {
     // sets the borders of the input fields to indicate weather there is unsaved changes or not
@@ -70,33 +79,37 @@ class _Textinput extends State<Textinput> {
         setUnsavedChanges(widget.section, false);
         border = nonEditedBorder;
       }
-      if (widget.field == 'phoneNumber') Isvalidinput.phoneNumber(v);
 
+      if (widget.field == 'date') print(Isvalidinput.date(v));
       setState(() {});
     }
 
     if (widget.type == InputType.nocomment) {
-      return Container(
-        height: 80,
-        decoration: border,
-        padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
-        margin: EdgeInsets.fromLTRB(8, 0, 8, 4),
-        child: TextField(
-          onChanged: change,
-          controller: widget.inputController,
-          cursorHeight: 22,
-          cursorColor: colors.primary,
-          style: TextStyle(fontSize: 24, color: colors.primary),
-          decoration: InputDecoration(
-            hintText: widget.hint,
-            hintStyle: TextStyle(fontSize: 20),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelText: widget.title,
-            border: InputBorder.none,
-            labelStyle: TextStyle(fontSize: 24, color: colors.primary),
+      return WillPopScope(
+          child: Container(
+            height: 90,
+            decoration: border,
+            padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
+            margin: EdgeInsets.fromLTRB(8, 0, 8, 4),
+            child: TextField(
+              onChanged: change,
+              controller: widget.inputController,
+              cursorHeight: 22,
+              cursorColor: colors.primary,
+              style: TextStyle(fontSize: 24, color: colors.primary),
+              decoration: InputDecoration(
+                hintText: widget.hint,
+                hintStyle: TextStyle(fontSize: 20, color: Color(0x35111111)),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: widget.title,
+                border: InputBorder.none,
+                labelStyle: TextStyle(fontSize: 24, color: colors.primary),
+              ),
+            ),
           ),
-        ),
-      );
+          onWillPop: () async {
+            return true;
+          });
     }
     return Container(
       height: widget.heightValue ?? 180,

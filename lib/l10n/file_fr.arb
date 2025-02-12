@@ -91,9 +91,14 @@
   "name": "Nom",
   "reset": "réinitialiser",
   "doYouWantToResetTheColorsAndSizesToDefaultValues": "Voulez-vous réinitialiser les couleurs et les tailles aux valeurs par défaut ?",
-  "youDontHaveAny": "vous n'avez pas de",
-  "clickPlusToAdd": "cliquez sur + pour ajouter des",
-  "error": "erreur",
-  "fileSaved": "fichier enregistré",
-  "savedIn": "enregistré dans"
+  "youDontHaveAny": "Vous n'avez pas de",
+  "clickPlusToAdd": "Cliquez sur + pour ajouter des",
+  "error": "Erreur",
+  "fileSaved": "Fichier enregistré",
+  "savedIn": "Enregistré dans",
+  "saved": "Enregistré",
+  "dateFieldIsntFormedCorrectly":"Le champ de la date n'est pas correctement formé",
+  "invalidFormat":"Format invalide",
+  "phoneNumberFieldIsntFormedCorrectly":"Le champ du numéro de téléphone n'est pas correctement formé",
+  "emailFieldIsntFormedCorrectly":"Le champ email n'est pas correctement formé"
 }

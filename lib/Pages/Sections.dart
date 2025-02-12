@@ -143,7 +143,10 @@ class Sections extends StatelessWidget {
           Positioned(
               child: BottomPanelOneButton(
             title: AppLocalizations.of(context)!.preview,
-            onpress: () => {Navigate(context, Preview(cvId: cvId))},
+            onpress: () async {
+              await Template_01.generateNoArgs(cvId);
+              Navigate(context, Preview(cvId: cvId));
+            },
             page: 'sections',
           ))
         ]),

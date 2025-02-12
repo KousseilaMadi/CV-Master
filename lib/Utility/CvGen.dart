@@ -723,8 +723,8 @@ class Template_01 {
     return '';
   }
 
-  static void generateNoArgs(int cvId) {
-    Template_01.generate(
+  static Future<void> generateNoArgs(int cvId) async {
+    await Template_01.generate(
         cvId,
         cd.customs[cvId].nameColor,
         cd.customs[cvId].mainColor,
@@ -741,7 +741,7 @@ class Template_01 {
         cd.customs[cvId].levelBarWidth);
   }
 
-  static void generate(
+  static Future<void> generate(
     cvId,
     int nameColor,
     int mainColor,
@@ -987,17 +987,7 @@ class Template_01 {
 
     final output = await getTemporaryDirectory();
     final file = File(
-        '${output.path}/${st.CVs[cvId].personalInformation.fullName}_CV.pdf');
+        '${output.path}/${st.CVs[cvId].personalInformation.fullName}_CV_${cvId.toString()}.pdf');
     file.writeAsBytes(await pdf.save());
-    // previewPDF(
-    //     '${(await getTemporaryDirectory()).path}/example.pdf', 'template 01');
-  }
-
-  static void previewPDF(int cvId) async {
-    await Printing.sharePdf(
-        bytes: File(
-                '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[cvId].personalInformation.fullName}_CV.pdf')
-            .readAsBytesSync(),
-        filename: '${st.CVs[cvId].personalInformation.fullName}_CV.pdf');
   }
 }

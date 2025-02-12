@@ -5,6 +5,8 @@ import 'package:cv_maker/Pages/Preview.dart';
 import 'package:cv_maker/Utility/Dialogs.dart';
 import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
+import 'package:cv_maker/Utility/isValidInput.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Utility/StorageHandler.dart';
 import 'package:cv_maker/Components/SectionsDrawer.dart';
 import 'package:flutter/material.dart';
@@ -40,16 +42,21 @@ class _EducationState extends State<Educations> {
   }
 
   void saveEducation() {
-    st.CVs[widget.cvId].educations = [];
-    for (int i = 0; i < tmp.educations.length; i++) {
-      st.CVs[widget.cvId].educations
-          .add(EducationsT.fromJson(jsonDecode(jsonEncode(tmp.educations[i]))));
+    if (checkIfDateIsValid()) {
+      st.CVs[widget.cvId].educations = [];
+      for (int i = 0; i < tmp.educations.length; i++) {
+        st.CVs[widget.cvId].educations.add(
+            EducationsT.fromJson(jsonDecode(jsonEncode(tmp.educations[i]))));
+      }
+    } else {
+      customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+          AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
     }
-
     educations = [];
     setState(() {});
     writeToStorage();
     setUnsavedChanges('education', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   void addEducation() {
@@ -61,6 +68,16 @@ class _EducationState extends State<Educations> {
         () => setState(() {
               count++;
             }));
+  }
+
+  bool checkIfDateIsValid() {
+    for (var el in tmp.educations) {
+      if ((el.startDate != '' && !Isvalidinput.date(el.startDate)) ||
+          (el.endDate != '' && !Isvalidinput.date(el.endDate))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   void removeEducation() {
@@ -119,13 +136,20 @@ class _EducationState extends State<Educations> {
             onremove: removeEducation,
             onsave: saveEducation,
             onpreview: () {
-              if (!hasUnsavedChanges(memory.currentSection)) {
-                Navigate(context, Preview(cvId: widget.cvId));
-              } else {
-                previewUnsavedChangesDialog(context, () {
-                  saveEducation();
+              if (checkIfDateIsValid()) {
+                if (!hasUnsavedChanges(memory.currentSection)) {
                   Navigate(context, Preview(cvId: widget.cvId));
-                });
+                } else {
+                  previewUnsavedChangesDialog(context, () {
+                    saveEducation();
+                    Navigate(context, Preview(cvId: widget.cvId));
+                  });
+                }
+              } else {
+                customDialog(
+                    context,
+                    AppLocalizations.of(context)!.invalidFormat,
+                    AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
               }
             },
             section: AppLocalizations.of(context)!.education,
@@ -133,14 +157,21 @@ class _EducationState extends State<Educations> {
           ),
         ),
         onWillPop: () async {
-          if (memory.unsavedChanges.education) {
-            unsavedChangesDialog(context, saveEducation);
-          }
-          for (var i = st.CVs[widget.cvId].educations.length - 1; i >= 0; i--) {
-            if (st.CVs[widget.cvId].educations[i].toJson().toString() ==
-                EducationsT().toJson().toString()) {
-              st.CVs[widget.cvId].educations.removeLast();
+          if (checkIfDateIsValid()) {
+            if (memory.unsavedChanges.education) {
+              unsavedChangesDialog(context, saveEducation);
             }
+            for (var i = st.CVs[widget.cvId].educations.length - 1;
+                i >= 0;
+                i--) {
+              if (st.CVs[widget.cvId].educations[i].toJson().toString() ==
+                  EducationsT().toJson().toString()) {
+                st.CVs[widget.cvId].educations.removeLast();
+              }
+            }
+          } else {
+            customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+                AppLocalizations.of(context)!.dateFieldIsntFormedCorrectly);
           }
 
           return true;

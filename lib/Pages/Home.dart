@@ -28,6 +28,10 @@ class Home extends StatelessWidget {
           ));
     }
 
+    for (var element in st.CVs) {
+      Template_01.generateNoArgs(st.CVs.indexOf(element));
+    }
+
     return Scaffold(
       backgroundColor: colors.white,
       appBar: AppBar(
@@ -46,15 +50,11 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      '${AppLocalizations.of(context)!.yourCvs}:',
-                      style: TextStyle(fontSize: 26),
-                    ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    '${AppLocalizations.of(context)!.yourCvs}:',
+                    style: TextStyle(fontSize: 26),
                   ),
                 ),
                 Padding(
@@ -212,7 +212,8 @@ class cvInstance extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        CustomButton(() {
+                        CustomButton(() async {
+                          await Template_01.generateNoArgs(st.CVs.indexOf(cv));
                           Navigate(context, Preview(cvId: st.CVs.indexOf(cv)));
                         },
                             AppLocalizations.of(context)!.preview,
@@ -221,7 +222,10 @@ class cvInstance extends StatelessWidget {
                             Icons.preview,
                             ButtonType.text),
                         CustomButton(
-                            fgcolor: colors.primary, bgcolor: colors.white, () {
+                            fgcolor: colors.primary,
+                            bgcolor: colors.white, () async {
+                          await Template_01.generateNoArgs(st.CVs.indexOf(cv));
+
                           Navigate(
                               context, CV_Actions(cvId: st.CVs.indexOf(cv)));
                         },

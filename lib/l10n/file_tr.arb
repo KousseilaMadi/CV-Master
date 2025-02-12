@@ -95,5 +95,9 @@
   "clickPlusToAdd": "tıklamanız yok + Ekle",
   "error": "hata",
   "fileSaved": "dosya Kaydedildi",
-  "savedIn": "kaydedildi"
+  "savedIn": "kaydedildi",
+  "dateFieldIsntFormedCorrectly":"Tarih Alanı Doğru Şekilde Oluşturulmamış",
+  "invalidFormat":"geçersiz Biçim",
+  "phoneNumberFieldIsntFormedCorrectly":"Telefon Numarası Alanı Doğru Şekilde Oluşturulmamış",
+  "emailFieldIsntFormedCorrectly":"e-posta Alanı Doğru Şekilde Oluşturulmamış"
 }

@@ -94,5 +94,10 @@
   "clickPlusToAdd": "Klicken Sie auf +, um hinzuzufügen",
   "error": "Fehler",
   "fileSaved": "Datei Gespeichert",
-  "savedIn": "Gespeichert in"
+  "savedIn": "Gespeichert in",
+  "saved":"gespeichert",
+  "dateFieldIsntFormedCorrectly":"Das Datumsfeld ist nicht korrekt formatiert",
+  "invalidFormat":"ungültiges Format",
+  "phoneNumberFieldIsntFormedCorrectly":"Das Feld für die Telefonnummer ist nicht richtig formatiert",
+  "emailFieldIsntFormedCorrectly":"Das E-Mail-Feld ist nicht richtig formatiert"
 }

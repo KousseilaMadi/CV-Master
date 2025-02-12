@@ -47,7 +47,6 @@ class SectionPage extends StatelessWidget {
           onremove: onremove,
           onsave: () {
             onsave();
-            Fluttertoast.showToast(msg: 'Saved');
           },
           onpreview: onpreview,
           cvId: cvId,

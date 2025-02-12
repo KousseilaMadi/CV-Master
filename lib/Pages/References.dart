@@ -9,6 +9,7 @@ import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Reference_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -49,6 +50,7 @@ class _References extends State<References> {
     setState(() {});
     writeToStorage();
     setUnsavedChanges('references', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   void addReferences() {

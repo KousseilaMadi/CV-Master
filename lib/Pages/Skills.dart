@@ -6,6 +6,7 @@ import 'package:cv_maker/Utility/Memory.dart';
 import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Components/SectionsDrawer.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
@@ -52,6 +53,7 @@ class _Skills extends State<Skills> {
     setState(() {});
     writeToStorage();
     setUnsavedChanges('skills', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   void addSkill() {

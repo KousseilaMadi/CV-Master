@@ -7,6 +7,7 @@ import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
+import 'package:cv_maker/Utility/isValidInput.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
@@ -43,7 +44,6 @@ class _PersonalInformation extends State<PersonalInformation> {
   TextEditingController facebookController = TextEditingController();
   TextEditingController instagramController = TextEditingController();
   TextEditingController websiteController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -58,11 +58,27 @@ class _PersonalInformation extends State<PersonalInformation> {
   }
 
   void savePersonalInformation() {
-    st.CVs[widget.cvId].personalInformation = PersonalInformationT.fromJson(
-        jsonDecode(jsonEncode(tmp.personalInformation)));
-    writeToStorage();
-    setUnsavedChanges('personalInformation', false);
-    setState(() {});
+    if ((Isvalidinput.phoneNumber(
+                tmp.personalInformation.phoneNumber.toString()) ||
+            tmp.personalInformation.phoneNumber.toString() == '') &&
+        (Isvalidinput.email(tmp.personalInformation.email.toString()) ||
+            tmp.personalInformation.email.toString() == '')) {
+      st.CVs[widget.cvId].personalInformation = PersonalInformationT.fromJson(
+          jsonDecode(jsonEncode(tmp.personalInformation)));
+      writeToStorage();
+      setUnsavedChanges('personalInformation', false);
+      Fluttertoast.showToast(msg: 'Saved');
+      setState(() {});
+    } else {
+      if (!Isvalidinput.phoneNumber(
+          tmp.personalInformation.phoneNumber.toString())) {
+        customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+            AppLocalizations.of(context)!.phoneNumberFieldIsntFormedCorrectly);
+      } else {
+        customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+            AppLocalizations.of(context)!.emailFieldIsntFormedCorrectly);
+      }
+    }
   }
 
   pictureListener(bool defaultP, String value) {
@@ -228,12 +244,15 @@ class _PersonalInformation extends State<PersonalInformation> {
                       type: InputType.nocomment,
                       title: '${AppLocalizations.of(context)!.phoneNumber}*',
                       onchange: phoneNumberListener,
+                      hint: 'ex: +213513487160',
                       inputController: phoneNumberController,
                       tmpValue:
                           st.CVs[widget.cvId].personalInformation.phoneNumber,
                       section: 'personalInformation',
                     ),
                     Textinput(
+                      field: 'email',
+                      hint: 'ex: prenomnom@email.com',
                       type: InputType.nocomment,
                       title: '${AppLocalizations.of(context)!.email}*',
                       onchange: emailListener,
@@ -266,26 +285,67 @@ class _PersonalInformation extends State<PersonalInformation> {
                 ),
                 BottomPanelTwoButtons(
                   onpreview: () {
-                    if (!hasUnsavedChanges(memory.currentSection)) {
-                      Navigate(context, Preview(cvId: widget.cvId));
-                    } else {
-                      previewUnsavedChangesDialog(context, () {
-                        savePersonalInformation();
+                    if ((Isvalidinput.phoneNumber(tmp
+                                .personalInformation.phoneNumber
+                                .toString()) ||
+                            tmp.personalInformation.phoneNumber.toString() ==
+                                '') &&
+                        (Isvalidinput.email(
+                                tmp.personalInformation.email.toString()) ||
+                            tmp.personalInformation.email.toString() == '')) {
+                      if (!hasUnsavedChanges(memory.currentSection)) {
                         Navigate(context, Preview(cvId: widget.cvId));
-                      });
+                      } else {
+                        previewUnsavedChangesDialog(context, () {
+                          savePersonalInformation();
+                          Navigate(context, Preview(cvId: widget.cvId));
+                        });
+                      }
+                    } else {
+                      if (!Isvalidinput.phoneNumber(
+                          tmp.personalInformation.phoneNumber.toString())) {
+                        customDialog(
+                            context,
+                            AppLocalizations.of(context)!.invalidFormat,
+                            AppLocalizations.of(context)!
+                                .phoneNumberFieldIsntFormedCorrectly);
+                      } else {
+                        customDialog(
+                            context,
+                            AppLocalizations.of(context)!.invalidFormat,
+                            AppLocalizations.of(context)!
+                                .emailFieldIsntFormedCorrectly);
+                      }
                     }
                   },
                   title2ndBtn: AppLocalizations.of(context)!.save,
                   on2ndBtnPress: () {
                     savePersonalInformation();
-                    Fluttertoast.showToast(msg: 'Saved');
                   },
                 )
               ],
             )),
         onWillPop: () async {
-          if (memory.unsavedChanges.personalInformation) {
-            unsavedChangesDialog(context, savePersonalInformation);
+          if ((Isvalidinput.phoneNumber(
+                      tmp.personalInformation.phoneNumber.toString()) ||
+                  tmp.personalInformation.phoneNumber.toString() == '') &&
+              (Isvalidinput.email(tmp.personalInformation.email.toString()) ||
+                  tmp.personalInformation.email.toString() == '')) {
+            if (memory.unsavedChanges.personalInformation) {
+              unsavedChangesDialog(context, savePersonalInformation);
+            }
+          } else {
+            if (!Isvalidinput.phoneNumber(
+                tmp.personalInformation.phoneNumber.toString())) {
+              customDialog(
+                  context,
+                  AppLocalizations.of(context)!.invalidFormat,
+                  AppLocalizations.of(context)!
+                      .phoneNumberFieldIsntFormedCorrectly);
+            } else {
+              customDialog(context, AppLocalizations.of(context)!.invalidFormat,
+                  AppLocalizations.of(context)!.emailFieldIsntFormedCorrectly);
+            }
           }
           return true;
         });

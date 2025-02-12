@@ -95,5 +95,9 @@
   "clickPlusToAdd": "нажмите +, чтобы добавить",
   "error": "ошибка",
   "fileSaved": "файл Сохранено",
-  "savedIn": "сохранено"
+  "savedIn": "сохранено",
+  "dateFieldIsntFormedCorrectly":"Поле даты сформировано неправильно",
+  "invalidFormat":"Неверный формат",
+  "phoneNumberFieldIsntFormedCorrectly":"Поле номера телефона сформировано неправильно",
+  "emailFieldIsntFormedCorrectly":"Поле электронной почты сформировано неправильно"
 }

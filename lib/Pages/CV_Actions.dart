@@ -10,7 +10,7 @@ import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../Utility/Colors.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,17 +26,15 @@ class CV_Actions extends StatefulWidget {
 class _CV_Actions extends State<CV_Actions> {
   @override
   Widget build(BuildContext context) {
-    Template_01.generateNoArgs(widget.cvId);
     void deleteCv(int cvId) {
       deleteConfirmationDialog(context, cvId);
     }
 
     Widget? pdfPreview;
-    pdfPreview = PDFView(
-      fitPolicy: FitPolicy.BOTH,
-      filePath:
-          '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[widget.cvId].personalInformation.fullName}_CV.pdf',
-    );
+
+    pdfPreview = SfPdfViewer.file(File(
+        '/data/user/0/com.ukiyo.cvmaster/cache/${st.CVs[widget.cvId].personalInformation.fullName}_CV_${widget.cvId}.pdf'));
+
     return WillPopScope(
       child: Scaffold(
         backgroundColor: colors.white,

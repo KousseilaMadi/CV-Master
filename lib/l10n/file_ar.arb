@@ -95,5 +95,10 @@
   "clickPlusToAdd": "انقر + لإضافة",
   "error": "خطأ",
   "fileSaved": "محفوظ",
-  "savedIn": "محفوظ في"
+  "savedIn": "محفوظ في",
+  "saved": "محفوظ",
+  "dateFieldIsntFormedCorrectly": "حقل التاريخ غير منسق بشكل صحيح",
+  "invalidFormat": "تنسيق غير صالح",
+  "phoneNumberFieldIsntFormedCorrectly": "حقل رقم الهاتف غير منسق بشكل صحيح",
+  "emailFieldIsntFormedCorrectly": "حقل البريد الإلكتروني غير منسق بشكل صحيح"
 }

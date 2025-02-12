@@ -95,5 +95,11 @@
     "clickPlusToAdd":"Click + to Add",
     "error":"Error",
     "fileSaved":"File saved",
-    "savedIn":"Saved in"
+    "savedIn":"Saved in",
+    "saved":"Saved",
+    "dateFieldIsntFormedCorrectly":"Date field isn't formed Correctly",
+    "invalidFormat":"Invalid format",
+    "phoneNumberFieldIsntFormedCorrectly":"Phone number field isn't formed Correctly",
+    "emailFieldIsntFormedCorrectly":"Email  field isn't formed correctly"
+
 }

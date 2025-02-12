@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:cv_maker/Pages/Home.dart';
 import 'package:cv_maker/Utility/Colors.dart';
 import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'Utility/StorageHandler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,9 +78,14 @@ class _RestartWidget extends State<RestartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child,
-    );
+    try {
+      return KeyedSubtree(
+        key: key,
+        child: widget.child,
+      );
+    } catch (e) {
+      print(e);
+    }
+    return widget.child;
   }
 }

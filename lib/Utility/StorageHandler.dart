@@ -28,7 +28,7 @@ void writeToStorage() async {
   await file.writeAsString(data);
 }
 
-Future readFromStorage() async {
+Future<void> readFromStorage() async {
   final file = await _storageFile;
   if (await fileExists(file) == false) {
     await file.create();
@@ -45,7 +45,7 @@ void writeToCustomData() async {
   await file.writeAsString(data);
 }
 
-Future readFromCustomData() async {
+Future<void> readFromCustomData() async {
   final file = await _customDataFile;
   if (await fileExists(file) == false) {
     await file.create();

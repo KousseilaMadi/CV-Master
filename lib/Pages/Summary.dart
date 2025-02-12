@@ -40,6 +40,7 @@ class _Summary extends State<Summary> {
     setState(() {});
     writeToStorage();
     setUnsavedChanges('summary', false);
+    Fluttertoast.showToast(msg: 'Saved');
   }
 
   summaryListener(String value) {
