@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Reference_form.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 class References extends StatefulWidget {
   final int cvId;

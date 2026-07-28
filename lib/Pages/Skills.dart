@@ -11,7 +11,7 @@ import '../Components/SectionsDrawer.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Skill_form.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 import 'Preview.dart';
 

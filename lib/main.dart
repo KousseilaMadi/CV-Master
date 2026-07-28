@@ -6,7 +6,7 @@ import 'package:cv_maker/Utility/CvGen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Utility/StorageHandler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() async {

@@ -12,7 +12,7 @@ import 'package:cv_maker/Components/SectionsDrawer.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
 import '../Components/Forms/Education_form.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 class Educations extends StatefulWidget {
   final int cvId;

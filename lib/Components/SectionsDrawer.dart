@@ -13,7 +13,7 @@ import '../Pages/Experiences.dart';
 import '../Pages/Interests.dart';
 import '../Pages/Languages.dart';
 import '../Pages/Summary.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class SectionsDrawer extends StatelessWidget {

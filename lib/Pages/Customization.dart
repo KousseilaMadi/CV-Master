@@ -10,7 +10,7 @@ import 'package:cv_maker/Utility/Navigate.dart';
 import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class Customization extends StatefulWidget {

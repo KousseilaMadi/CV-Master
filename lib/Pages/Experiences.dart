@@ -14,7 +14,7 @@ import '../Utility/Colors.dart';
 import '../Components/Forms/Experience_form.dart';
 import '../Components/SectionsDrawer.dart';
 import '../Components/SectionPage.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 class Experiences extends StatefulWidget {
   final int cvId;

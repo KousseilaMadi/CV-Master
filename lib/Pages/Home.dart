@@ -12,7 +12,7 @@ import 'package:cv_maker/Utility/Percent.dart';
 import 'package:cv_maker/Utility/StorageHandler.dart';
 import 'package:flutter/material.dart';
 import '../Utility/Colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 import '../Components/BottomPanel/BottomPanelOneButton.dart';
 
 class Home extends StatelessWidget {

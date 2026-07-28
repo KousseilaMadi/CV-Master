@@ -16,7 +16,7 @@ import '../Components/SectionsDrawer.dart';
 import '../Components/BottomPanel/BottomPanelTwoButtons.dart';
 import '../Utility/Enums.dart';
 import '../Components/CustomButton.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:image_cropper/image_cropper.dart';

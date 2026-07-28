@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../Utility/Colors.dart';
 import '../../Utility/Percent.dart';
 import '../../Utility/Enums.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 import '../CustomButton.dart';
 
 class BottomPanelFourButtons extends StatelessWidget {

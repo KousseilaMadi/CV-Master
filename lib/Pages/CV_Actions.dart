@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../Utility/Colors.dart';
 import 'package:cv_maker/Utility/hasEmptyFields.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cv_maker/l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CV_Actions extends StatefulWidget {
